@@ -2,6 +2,7 @@ import pygame
 import sys
 from button import *
 from button import Button
+from ground import Ground
 
 
 # Initialisation de Pygame
