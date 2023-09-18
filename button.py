@@ -1,5 +1,5 @@
 import pygame
-import sys
+
 
 # Classe pour représenter un bouton
 def playFunction():
