@@ -13,12 +13,13 @@ def creditFunction():
 
 
 class Button:
-    def __init__(self, texte, x, y, largeur, hauteur, fonction):
+    def __init__(self, texte, x, y, largeur, hauteur, couleur, fonction):
         self.texte = texte
         self.x = x
         self.y = y
         self.largeur = largeur
         self.hauteur = hauteur
+        self.couleur = couleur
         self.fonction = fonction
 
     def drawButton(self, surface, colorTxt):
