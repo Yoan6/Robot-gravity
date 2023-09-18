@@ -1,7 +1,7 @@
 import pygame
 import sys
-from Button import *
-from Button import Button
+from button import *
+from button import Button
 
 
 # Initialisation de Pygame
