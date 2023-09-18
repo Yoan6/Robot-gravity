@@ -1,59 +1,62 @@
 import pygame
 import sys
+from Button import *
+from Button import Button
+
 
 # Initialisation de Pygame
 pygame.init()
 
 # Configuration de la taille de la fenêtre
-largeur_fenetre = 1400  # Spécifiez la largeur souhaitée
-hauteur_fenetre = 900  # Spécifiez la hauteur souhaitée
-fenetre = pygame.display.set_mode((largeur_fenetre, hauteur_fenetre))
+windowWidth = 1400  # Spécifiez la largeur souhaitée
+windowHeight = 900  # Spécifiez la hauteur souhaitée
+window = pygame.display.set_mode((windowWidth, windowHeight))
 pygame.display.set_caption("Page d'accueil")
 
 # Définition des couleurs
-BLANC = (255, 255, 255)
-NOIR = (0, 0, 0)
+WHITE: tuple[int, int, int] = (255, 255, 255)
+BLACK: tuple[int, int, int] = (0, 0, 0)
 
 # Chargement de l'image de la croix de fermeture
 close_button = pygame.image.load("Images/close_button.png")
 
 # Redimensionnement de l'image de la croix de fermeture
-largeur_close_button = 30  # Spécifiez la nouvelle largeur souhaitée
-longueur_close_button = 30  # Spécifiez la nouvelle hauteur souhaitée
-close_button = pygame.transform.scale(close_button, (largeur_close_button, longueur_close_button))
+closeButtonWidth = 30  # Spécifiez la nouvelle largeur souhaitée
+closeButtonHeight = 30  # Spécifiez la nouvelle hauteur souhaitée
+close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
 
 
 # Création des instances de la classe Bouton
-bouton_jouer = Bouton("Jouer", 550, 380, 300, 50, (0, 128, 255), fonction_jouer)
-bouton_credits = Bouton("Crédits", 550, 480, 300, 50, (0, 128, 255), fonction_credits)
+playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255), playFunction)
+creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255), creditFunction)
 
 # Boucle principale
-en_cours = True
-while en_cours:
+running = True
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            en_cours = False
+            running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = pygame.mouse.get_pos()
             # Clic sur le bouton Jouer
-            if bouton_jouer.x < x < bouton_jouer.x + bouton_jouer.largeur and bouton_jouer.y < y < bouton_jouer.y + bouton_jouer.hauteur:
-                bouton_jouer.fonction()
+            if playButton.x < x < playButton.x + playButton.largeur and playButton.y < y < playButton.y + playButton.hauteur:
+                playButton.fonction()
             # Clic sur le bouton Crédits
-            elif bouton_credits.x < x < bouton_credits.x + bouton_credits.largeur and bouton_credits.y < y < bouton_credits.y + bouton_credits.hauteur:
-                bouton_credits.fonction()
+            elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
+                creditButton.fonction()
             # Clic sur la croix de fermeture de fenêtre
-            elif largeur_fenetre - largeur_close_button < x < largeur_fenetre and 0 < y < longueur_close_button:
-                en_cours = False
+            elif windowWidth - closeButtonWidth < x < windowWidth and 0 < y < closeButtonHeight:
+                running = False
 
     # Efface l'écran
-    fenetre.fill(NOIR)
+    window.fill(BLACK)
 
     # Dessine les boutons
-    bouton_jouer.dessiner(fenetre)
-    bouton_credits.dessiner(fenetre)
+    playButton.drawButton(window, WHITE)
+    creditButton.drawButton(window, WHITE)
 
     # Affiche le bouton de fermeture redimensionné en haut à droite
-    fenetre.blit(close_button, (largeur_fenetre - largeur_close_button, 0))
+    window.blit(close_button, (windowWidth - closeButtonWidth, 0))
 
     # Rafraîchit l'écran
     pygame.display.flip()
