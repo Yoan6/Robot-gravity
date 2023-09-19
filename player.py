@@ -10,7 +10,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.x, self.y, self.taille[0], self.taille[1])
         self.jumpStatus = 0
         self.jumpUp = 0
-        self.jumpDown = 10
+        self.jumpDown = 5
         self.jumped = False
         self.jumpCounter = 0
 
@@ -24,7 +24,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         if self.jumped:
             print(self.jumpDown, self.jumpUp)
-            if self.jumpUp >= 10:
+            if self.jumpUp >= 8:
                 self.jumpDown -= 1
                 self.jumpStatus = self.jumpDown
 
@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
 
             if self.jumpDown < 0:
                 self.jumpUp = 0
-                self.jumpDown = 10
+                self.jumpDown = 5
                 self.jumped = False
 
             self.rect.y -= (10 * (self.jumpStatus / 2))

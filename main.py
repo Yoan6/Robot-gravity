@@ -24,6 +24,9 @@ class Game:
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
+        self.rect = pygame.Rect(0, 0, 1400, 900)
+
+
 
     # Boucle principale
     def main(self):
@@ -102,10 +105,10 @@ class Game:
                 elif level1Ran:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
-                            self.playerSpeedX = 10
+                            self.playerSpeedX = 8
 
                         if event.key == pygame.K_LEFT:
-                            self.playerSpeedX = -10
+                            self.playerSpeedX = -8
 
                         if event.key == pygame.K_UP:
                             self.player.jumped = True
@@ -140,7 +143,9 @@ class Game:
                 self.ground.show(self.screen)
                 # Active la gravité
                 self.gravityGame()
+                self.player.rect.clamp_ip(self.rect)
                 self.player.move(self.playerSpeedX)
+                pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 1)
 
             pygame.display.flip()
 
