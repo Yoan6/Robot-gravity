@@ -4,12 +4,12 @@ import pygame
 # Classe pour représenter un bouton
 def playFunction():
     print("Bouton Jouer cliqué")
-    # Ajoutez ici le code pour la fonction "Jouer"
+    # Ajouter ici le code pour la fonction "Jouer"
 
 
 def creditFunction():
     print("Bouton Crédits cliqué")
-    # Ajoutez ici le code pour la fonction "Crédits"
+    # Ajouter ici le code pour la fonction "Crédits"
 
 
 class Button:
@@ -29,4 +29,3 @@ class Button:
         texte_rect = texte_surface.get_rect()
         texte_rect.center = (self.x + self.largeur / 2, self.y + self.hauteur / 2)
         surface.blit(texte_surface, texte_rect)
-

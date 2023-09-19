@@ -3,6 +3,7 @@ import sys
 from button import *
 from button import Button
 from ground import Ground
+from player import Player
 
 
 class Game:
@@ -12,9 +13,21 @@ class Game:
         self.screen = pygame.display.set_mode((1400, 900))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
+        self.player_x, self.player_y = 600, 400
+        self.height = [32, 64]
+        self.player = Player(self.player_x, self.player_y, self.height)
 
     # Boucle principale
     def main(self):
+
+        # Création des instances de la classe Bouton
+        playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255), playFunction)
+        creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255), creditFunction)
+
+        # Définition des couleurs
+        white: tuple[int, int, int] = (255, 255, 255)
+        black: tuple[int, int, int] = (0, 0, 0)
+
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -30,20 +43,13 @@ class Game:
                     # Clic sur la croix de fermeture de fenêtre
                     elif 1400 - closeButtonWidth < x < 1400 and 0 < y < closeButtonHeight:
                         self.running = False
-            # Définition des couleurs
-            white: tuple[int, int, int] = (255, 255, 255)
-            black: tuple[int, int, int] = (0, 0, 0)
+
             self.screen.fill(black)
-
-
-            # Création des instances de la classe Bouton
-            playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255), playFunction)
-            creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255), creditFunction)
+            self.player.show(self.screen)
 
             # Dessine les boutons
             playButton.drawButton(self.screen, white)
             creditButton.drawButton(self.screen, white)
-
 
             # Chargement de l'image de la croix de fermeture
             close_button = pygame.image.load("Images/close_button.png")
@@ -60,8 +66,7 @@ class Game:
 
 
 # Lancement
-if  __name__ == '__main__':
+if __name__ == '__main__':
     pygame.init()
     Game().main()
     pygame.quit()
-
