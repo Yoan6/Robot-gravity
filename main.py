@@ -23,6 +23,7 @@ class Game:
         self.ground = Ground()
         self.gravity = (0, 10)
         self.resist = (0, 0)
+        self.touchGround = False
 
     # Boucle principale
     def main(self):
@@ -103,29 +104,42 @@ class Game:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 10
 
-                        elif event.key == pygame.K_LEFT:
+                        if event.key == pygame.K_LEFT:
                             self.playerSpeedX = -10
+
+                        if event.key == pygame.K_UP:
+                            self.player.jumped = True
+                            self.player.jumpCounter += 1
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 0
 
-                        elif event.key == pygame.K_LEFT:
+                        if event.key == pygame.K_LEFT:
                             self.playerSpeedX = 0
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 if self.ground.rect.colliderect(self.player.rect):
                     self.resist = (0, -10)
+                    self.touchGround = True
+                    self.player.jumpCounter = 0
+
+                else:
+                    self.resist = (0, 0)
 
                 level1.update()
+                # Le joueur ne peut faire qu'un saut
+                if self.player.jumped and self.touchGround:
+                    if self.player.jumpCounter < 1:
+                        self.player.jump()
+
                 # Dessine le player :
                 self.player.show(self.screen)
                 # Dessine le sol
                 self.ground.show(self.screen)
                 # Active la gravité
                 self.gravityGame()
-
                 self.player.move(self.playerSpeedX)
 
             pygame.display.flip()
