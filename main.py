@@ -36,6 +36,18 @@ class Game:
         black: tuple[int, int, int] = (0, 0, 0)
 
         timer = pygame.time.Clock()
+
+        # Variable de jeux
+        scroll_left = False
+        scroll_right = False
+        scroll = 0
+        scroll_speed = 1
+
+        if scroll_left == True:
+            scroll -= 5
+        if scroll_right == True:
+            scroll += 5
+
         # 1er niveau
         level1 = Level('Images/farm.png', self.screen)
 
@@ -57,8 +69,24 @@ class Game:
                     # Clic sur le bouton Jouer
                     if playButton.x < x < playButton.x + playButton.largeur and playButton.y < y < playButton.y + playButton.hauteur:
                         main_buttons_visible = False
+                        # On ne doit plus pouvoir cliquer sur les boutons
+                        playButton.erase_button()
+                        creditButton.erase_button()
                         level1.run()
                         level1Ran = True
+
+                        # Touches pressées
+                        if event.type == pygame.KEYDOWN:
+                            if event.type == pygame.K_LEFT:
+                                scroll_left == True
+                            if event.type == pygame.K_RIGHT:
+                                scroll_right == True
+
+                        if event.type == pygame.KEYUP:
+                            if event.type == pygame.K_LEFT:
+                                scroll_left == False
+                            if event.type == pygame.K_RIGHT:
+                                scroll_right == False
 
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:

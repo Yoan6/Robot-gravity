@@ -1,6 +1,6 @@
 import pygame
 from player import Player
-
+import pytmx
 
 class Level:
     def __init__(self, map_path, surface):
@@ -13,6 +13,8 @@ class Level:
 
     def run(self):
         self.window.blit(self.map, (0, 0))
+        #self.window.blit(self.map, (0, 0))
+        #tmx_data = pytmx.util_pygame.load_pygame('maps/TestLevel')
 
     def update(self):
         self.window.blit(self.map, (0, 0))
