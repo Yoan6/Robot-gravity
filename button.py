@@ -20,7 +20,6 @@ class Button:
         self.largeur = largeur
         self.hauteur = hauteur
         self.couleur = couleur
-        self.fonction = fonction
 
     def draw(self, surface, colorTxt):
         pygame.draw.rect(surface, self.couleur, (self.x, self.y, self.largeur, self.hauteur))

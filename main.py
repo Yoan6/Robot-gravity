@@ -17,15 +17,14 @@ class Game:
         pygame.display.set_caption("Page d'accueil")
         self.running = True
         self.player_x, self.player_y = 600, 400
-        self.height = [32, 64]
-        self.player = Player(self.player_x, self.player_y, self.height)
+        self.player = Player("Images/pnj.png", self.player_x, self.player_y, 248, 360)
 
     # Boucle principale
     def main(self):
 
         # Création des instances de la classe Bouton
-        playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255), playFunction)
-        creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255), creditFunction)
+        playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255))
+        creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255))
 
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
