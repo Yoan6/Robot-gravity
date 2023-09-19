@@ -1,13 +1,16 @@
 import pygame
 
-
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, height):
+    def __init__(self, image_path, x, y, width, height):
         super().__init__()
-        self.x = x
-        self.y = y
-        self.height = height
-        self.rect = pygame.Rect(self.x, self.y, self.height[0], self.height[1])
+        original_image = pygame.image.load(image_path)
+        self.image = pygame.transform.scale(original_image, (width, height))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.velocity = [0, 0]  # La vitesse initiale du sprite
 
-    def show(self, surface):
-        pygame.draw.rect(surface, (255, 0, 0), self.rect)
+    def update(self):
+    # Permet de mettre à jour le sprite du robot à chaque game loop
+
+        global camera_x

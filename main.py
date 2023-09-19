@@ -1,9 +1,12 @@
 import pygame
 import sys
+import pytmx
 from button import *
 from button import Button
-from ground import Ground
+from player import *
 from player import Player
+from level import Level
+from ground import Ground
 
 
 class Game:
@@ -28,28 +31,47 @@ class Game:
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
 
+        timer = pygame.time.Clock()
+        # 1er niveau
+        level1 = Level('Images/farm.png', self.screen)
+
+        # On définit le groupe de sprite du robot :
+        player_sprite = Player("Images/pnj.png", 200, 200, 248, 360)
+        player_group = pygame.sprite.Group(player_sprite)
+
+        # Définition de la position horizontale de la caméra :
+        camera_x = 0
+
+        # Variable pour indiquer si les boutons sont visibles ou non
+        main_buttons_visible = True
+
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    self.running = False
                     sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     x, y = pygame.mouse.get_pos()
                     # Clic sur le bouton Jouer
                     if playButton.x < x < playButton.x + playButton.largeur and playButton.y < y < playButton.y + playButton.hauteur:
-                        playButton.fonction()
+                        main_buttons_visible = False
+                        level1.run()
+
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
-                        creditButton.fonction()
+                        print("Bouton Crédits cliqué")
+                        # Ajoutez ici le code pour la fonction "Crédits"
+
                     # Clic sur la croix de fermeture de fenêtre
                     elif 1400 - closeButtonWidth < x < 1400 and 0 < y < closeButtonHeight:
                         self.running = False
 
-            self.screen.fill(black)
-            self.player.show(self.screen)
+            pygame.display.update()
 
             # Dessine les boutons
-            playButton.drawButton(self.screen, white)
-            creditButton.drawButton(self.screen, white)
+            if main_buttons_visible:
+                playButton.draw(self.screen, white)
+                creditButton.draw(self.screen, white)
 
             # Chargement de l'image de la croix de fermeture
             close_button = pygame.image.load("Images/close_button.png")
@@ -58,11 +80,17 @@ class Game:
             closeButtonHeight = 30  # Spécifiez la nouvelle hauteur souhaitée
             close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
 
+            # Dessine le player :
+            player_group.draw(self.screen)
+
             # Affiche le bouton de fermeture redimensionné en haut à droite
             self.screen.blit(close_button, (1400 - closeButtonWidth, 0))
 
-            # Rafraîchit l'écran
-            pygame.display.flip()
+            # On définis un laps de temps de 60 images par seconde par game loop
+            timer.tick(60)
+
+        # Écran noir
+        self.screen.fill(black)
 
 
 # Lancement
@@ -70,3 +98,4 @@ if __name__ == '__main__':
     pygame.init()
     Game().main()
     pygame.quit()
+
