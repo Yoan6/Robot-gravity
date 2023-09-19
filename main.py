@@ -1,7 +1,6 @@
 import pygame
 import sys
 import pytmx
-from button import *
 from button import Button
 from player import *
 from player import Player
@@ -16,8 +15,14 @@ class Game:
         self.screen = pygame.display.set_mode((1400, 900))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
-        self.player_x, self.player_y = 600, 400
-        self.player = Player("Images/pnj.png", self.player_x, self.player_y, 248, 360)
+        self.player_x = 400
+        self.player_y = 400
+        self.playerSpeedX = 0
+        self.taille = [32, 64]
+        self.player = Player(self.player_x, self.player_y, self.taille)
+        self.ground = Ground()
+        self.gravity = (0, 2)
+        self.resist = (0, 0)
 
     # Boucle principale
     def main(self):
@@ -34,15 +39,13 @@ class Game:
         # 1er niveau
         level1 = Level('Images/farm.png', self.screen)
 
-        # On définit le groupe de sprite du robot :
-        player_sprite = Player("Images/pnj.png", 200, 200, 248, 360)
-        player_group = pygame.sprite.Group(player_sprite)
-
         # Définition de la position horizontale de la caméra :
         camera_x = 0
 
         # Variable pour indiquer si les boutons sont visibles ou non
         main_buttons_visible = True
+
+        level1Ran = False
 
         while self.running:
             for event in pygame.event.get():
@@ -55,6 +58,7 @@ class Game:
                     if playButton.x < x < playButton.x + playButton.largeur and playButton.y < y < playButton.y + playButton.hauteur:
                         main_buttons_visible = False
                         level1.run()
+                        level1Ran = True
 
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
@@ -65,7 +69,28 @@ class Game:
                     elif 1400 - closeButtonWidth < x < 1400 and 0 < y < closeButtonHeight:
                         self.running = False
 
-            pygame.display.update()
+                elif level1Ran:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_RIGHT:
+                            self.playerSpeedX = 10
+
+                    if event.type == pygame.KEYUP:
+                        if event.key == pygame.K_RIGHT:
+                            self.playerSpeedX = 0
+
+
+            # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
+            if level1Ran:
+                level1.update()
+                self.ground.show(self.screen)
+                # Dessine le player :
+                self.player.show(self.screen)
+                # Active la gravité
+                self.gravityGame()
+
+                self.player.move(self.playerSpeedX)
+
+            pygame.display.flip()
 
             # Dessine les boutons
             if main_buttons_visible:
@@ -79,17 +104,17 @@ class Game:
             closeButtonHeight = 30  # Spécifiez la nouvelle hauteur souhaitée
             close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
 
-            # Dessine le player :
-            player_group.draw(self.screen)
-
             # Affiche le bouton de fermeture redimensionné en haut à droite
             self.screen.blit(close_button, (1400 - closeButtonWidth, 0))
 
-            # On définis un laps de temps de 60 images par seconde par game loop
+            # On défini un laps de temps de 60 images par seconde par game loop
             timer.tick(60)
 
         # Écran noir
         self.screen.fill(black)
+
+    def gravityGame(self):
+        self.player.rect.y += self.gravity[1] + self.resist[1]
 
 
 # Lancement
@@ -97,4 +122,3 @@ if __name__ == '__main__':
     pygame.init()
     Game().main()
     pygame.quit()
-
