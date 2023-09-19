@@ -21,7 +21,7 @@ class Game:
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
         self.ground = Ground()
-        self.gravity = (0, 2)
+        self.gravity = (0, 10)
         self.resist = (0, 0)
 
     # Boucle principale
@@ -69,22 +69,32 @@ class Game:
                     elif 1400 - closeButtonWidth < x < 1400 and 0 < y < closeButtonHeight:
                         self.running = False
 
+                # Deplacements
                 elif level1Ran:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 10
 
+                        elif event.key == pygame.K_LEFT:
+                            self.playerSpeedX = -10
+
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 0
 
+                        elif event.key == pygame.K_LEFT:
+                            self.playerSpeedX = 0
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
+                if self.ground.rect.colliderect(self.player.rect):
+                    self.resist = (0, -10)
+
                 level1.update()
-                self.ground.show(self.screen)
                 # Dessine le player :
                 self.player.show(self.screen)
+                # Dessine le sol
+                self.ground.show(self.screen)
                 # Active la gravité
                 self.gravityGame()
 
