@@ -29,3 +29,6 @@ class Button:
         texte_rect.center = (self.x + self.largeur / 2, self.y + self.hauteur / 2)
         surface.blit(texte_surface, texte_rect)
 
+    def erase_button(self):
+        self.x = 0
+        self.y = 0
