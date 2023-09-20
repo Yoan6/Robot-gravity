@@ -6,7 +6,7 @@ from player import *
 from player import Player
 from level import Level
 from ground import Ground
-
+from obstacles import Spike
 
 class Game:
 
