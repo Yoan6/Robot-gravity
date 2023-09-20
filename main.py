@@ -20,10 +20,12 @@ class Game:
         self.playerSpeedX = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground()
+        self.grounds = [Ground(0, 600, 1400, 900),
+                        Ground(500, 450, 300, 25)]
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
+        # Countour de l'ecran
         self.rect = pygame.Rect(0, 0, 1400, 900)
 
         # 1 = vers le bas, autre = vers le haut
@@ -42,17 +44,6 @@ class Game:
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
-
-        # Variable de jeux
-        scroll_left = False
-        scroll_right = False
-        scroll = 0
-        scroll_speed = 1
-
-        if scroll_left == True:
-            scroll -= 5
-        if scroll_right == True:
-            scroll += 5
 
         # 1er niveau
         level1 = Level('Images/farm.png', self.screen)
@@ -103,7 +94,7 @@ class Game:
                             self.player.jumped = True
                             self.player.jumpCounter += 1
 
-                        if event.key == pygame.K_SPACE:
+                        if event.key == pygame.K_SPACE and self.touchGround:
                             if self.gravityDirection == 1:
                                 self.gravityDirection = -1
                             else:
@@ -118,29 +109,32 @@ class Game:
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
-                if self.ground.rect.colliderect(self.player.rect):
-                    # Si le personnage collisionne par le bas, la résistance doit se faire vers le bas, sinon vers le haut
-                    if self.ground.rect.y > self.player.y:
-                        self.resist = (0, -10)
-                    else:
-                        self.resist = (0, 10)
-
-                    self.touchGround = True
-                    self.player.jumpCounter = 0
-
-                else:
-                    self.resist = (0, 0)
-
                 level1.update()
+                groundFound = False
+                for ground in self.grounds:
+                    if not groundFound:
+                        if ground.rect.colliderect(self.player.rect):
+                            # Si le personnage collisionne par le bas, la résistance doit se faire vers le bas, sinon vers le haut
+                            if ground.rect.y > self.player.y:
+                                self.resist = (0, -10)
+                            else:
+                                print('here')
+                                self.resist = (0, 10)
+
+                            self.touchGround = True
+                            self.player.jumpCounter = 0
+                            groundFound = True
+                        else:
+                            self.resist = (0, 0)
+
+                    # Dessine le sol
+                    ground.show(self.screen)
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped and self.touchGround:
                     if self.player.jumpCounter < 1:
                         self.player.jump()
-
                 # Dessine le player :
                 self.player.show(self.screen)
-                # Dessine le sol
-                self.ground.show(self.screen)
                 # Active la gravité
                 self.gravityGame()
                 self.player.rect.clamp_ip(self.rect)
@@ -170,6 +164,7 @@ class Game:
         self.screen.fill(black)
 
     def gravityGame(self):
+        print(self.resist)
         if self.gravityDirection == 1:
             self.player.rect.y += self.gravity[1] + self.resist[1]
         else:
