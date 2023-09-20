@@ -23,7 +23,6 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         if self.jumped:
-            print(self.jumpDown, self.jumpUp)
             if self.jumpUp >= 8:
                 self.jumpDown -= 1
                 self.jumpStatus = self.jumpDown

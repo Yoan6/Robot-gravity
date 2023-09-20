@@ -26,7 +26,8 @@ class Game:
         self.touchGround = False
         self.rect = pygame.Rect(0, 0, 1400, 900)
 
-
+        # 1 = vers le bas, autre = vers le haut
+        self.gravityDirection = 1
 
     # Boucle principale
     def main(self):
@@ -79,19 +80,6 @@ class Game:
                         level1.run()
                         level1Ran = True
 
-                        # Touches pressées
-                        if event.type == pygame.KEYDOWN:
-                            if event.type == pygame.K_LEFT:
-                                scroll_left == True
-                            if event.type == pygame.K_RIGHT:
-                                scroll_right == True
-
-                        if event.type == pygame.KEYUP:
-                            if event.type == pygame.K_LEFT:
-                                scroll_left == False
-                            if event.type == pygame.K_RIGHT:
-                                scroll_right == False
-
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
                         print("Bouton Crédits cliqué")
@@ -105,14 +93,20 @@ class Game:
                 elif level1Ran:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
-                            self.playerSpeedX = 8
+                            self.playerSpeedX = 18
 
                         if event.key == pygame.K_LEFT:
-                            self.playerSpeedX = -8
+                            self.playerSpeedX = -18
 
                         if event.key == pygame.K_UP:
                             self.player.jumped = True
                             self.player.jumpCounter += 1
+
+                        if event.key == pygame.K_SPACE:
+                            if self.gravityDirection == 1:
+                                self.gravityDirection = -1
+                            else:
+                                self.gravityDirection = 1
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
@@ -124,7 +118,12 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 if self.ground.rect.colliderect(self.player.rect):
-                    self.resist = (0, -10)
+                    # Si le personnage collisionne par le bas, la résistance doit se faire vers le bas, sinon vers le haut
+                    if self.ground.rect.y > self.player.y:
+                        self.resist = (0, -10)
+                    else:
+                        self.resist = (0, 10)
+
                     self.touchGround = True
                     self.player.jumpCounter = 0
 
@@ -171,7 +170,10 @@ class Game:
         self.screen.fill(black)
 
     def gravityGame(self):
-        self.player.rect.y += self.gravity[1] + self.resist[1]
+        if self.gravityDirection == 1:
+            self.player.rect.y += self.gravity[1] + self.resist[1]
+        else:
+            self.player.rect.y -= self.gravity[1] + self.resist[1]
 
 
 # Lancement
