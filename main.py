@@ -25,6 +25,7 @@ class Game:
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
+        self.runningMusic=False
         self.rect = pygame.Rect(0, 0, 1400, 900)
 
         # 1 = vers le bas, autre = vers le haut
@@ -39,7 +40,7 @@ class Game:
         # Création des instances de la classe Bouton
         playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255))
         creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255))
-
+        
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
@@ -137,7 +138,13 @@ class Game:
                 if self.player.jumped and self.touchGround:
                     if self.player.jumpCounter < 1:
                         self.player.jump()
-
+                if self.runningMusic==False: 
+                    print("musique")       
+                    pygame.mixer.init()
+                    pygame.mixer.music.load('Musique/musique.mp3')
+                    pygame.mixer.music.set_volume(0.3)
+                    pygame.mixer.music.play(-1)
+                    self.runningMusic=True
                 # Dessine le player :
                 self.player.show(self.screen)
                 # Dessine le sol
