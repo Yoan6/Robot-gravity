@@ -16,20 +16,20 @@ class Game:
 
     def __init__(self):
         # Configuration de la taille de la fenêtre
-        self.screen = pygame.display.set_mode((1400, 900))
+        self.screen = pygame.display.set_mode((1024, 768))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
-        self.player_x = 400
+        self.player_x = 380
         self.player_y = 400
         self.playerSpeedX = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground(0, 600, 1400, 900)
+        self.ground = Ground(0, 767, 1024, 768)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
         self.runningMusic = False
-        self.rect = pygame.Rect(0, 0, 1400, 900)
+        self.rect = pygame.Rect(0, 0, 1024, 768)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -46,15 +46,20 @@ class Game:
     def main(self):
 
         # Création des instances de la classe Bouton
-        playButton = Button("Jouer", 550, 380, 300, 50, (0, 128, 255))
-        creditButton = Button("Crédits", 550, 480, 300, 50, (0, 128, 255))
-
+        playButton = Button("Jouer", 360, 320, 300, 50, (0, 128, 255))
+        creditButton = Button("Crédits", 360, 420, 300, 50, (0, 128, 255))
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
 
         # 1er niveau
-        level1 = Level('Images/farm.png', self.screen)
+        level1 = Level('maps/Level1.png', self.screen, "Niveau 1")
+        # 2ème niveau
+        level2 = Level('maps/Level2.png', self.screen, "Niveau 2")
+        # 3ème niveau
+        level3 = Level('maps/Level3.png', self.screen, "Niveau 3")
+        # 4ème niveau
+        #level4 = Level('maps/Level4.png', self.screen, "Niveau 4")
 
         # Définition de la position horizontale de la caméra :
         camera_x = 0
@@ -63,6 +68,7 @@ class Game:
         main_buttons_visible = True
 
         level1Ran = False
+        creditRan = False
 
         while self.running:
             for event in pygame.event.get():
@@ -82,11 +88,13 @@ class Game:
 
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
-                        print("Bouton Crédits cliqué")
-                        # Ajoutez ici le code pour la fonction "Crédits"
+                        self.screen.fill("black")
+                        creditRan = True
+                        playButton.erase_button()
+                        creditButton.erase_button()
 
                     # Clic sur la croix de fermeture de fenêtre
-                    elif 1400 - closeButtonWidth < x < 1400 and 0 < y < closeButtonHeight:
+                    elif 1024 - closeButtonWidth < x < 1024 and 0 < y < closeButtonHeight:
                         self.running = False
 
                 # Deplacements
@@ -156,6 +164,10 @@ class Game:
                 self.player.move(self.playerSpeedX)
                 pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 1)
 
+            elif creditRan:
+                print("Entré dans les crédits")
+
+
             pygame.display.flip()
 
             # Limite des fps
@@ -173,7 +185,7 @@ class Game:
             close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
 
             # Affiche le bouton de fermeture redimensionné en haut à droite
-            self.screen.blit(close_button, (1400 - closeButtonWidth, 0))
+            self.screen.blit(close_button, (1024 - closeButtonWidth, 0))
 
         # Écran noir
         self.screen.fill(black)
