@@ -13,7 +13,6 @@ class Level:
 
     def run(self):
         self.window.blit(self.map, (0, 0))
-        #self.window.blit(self.map, (0, 0))
         #tmx_data = pytmx.util_pygame.load_pygame('maps/TestLevel')
 
     def update(self):

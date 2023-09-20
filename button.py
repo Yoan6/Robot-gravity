@@ -32,3 +32,5 @@ class Button:
     def erase_button(self):
         self.x = 0
         self.y = 0
+        self.largeur = 0
+        self.hauteur = 0

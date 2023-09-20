@@ -12,6 +12,7 @@ from obstacles import Spike
 from advise import Advise
 from plateform import Plateform
 
+
 class Game:
 
     def __init__(self):
@@ -24,7 +25,7 @@ class Game:
         self.playerSpeedX = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground(0, 600, 1400, 900)
+        self.ground = Ground(0, 700, 1400, 900)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
@@ -33,10 +34,9 @@ class Game:
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
-        self.plateformGroup = Group()
         self.plateformListRect = [
             pygame.Rect(300, 500, 100, 50),
-            pygame.Rect(800, 500, 100, 50)
+            pygame.Rect(800, 400, 200, 50)
         ]
 
         self.horloge = pygame.time.Clock()
@@ -54,7 +54,7 @@ class Game:
         black: tuple[int, int, int] = (0, 0, 0)
 
         # 1er niveau
-        level1 = Level('Images/farm.png', self.screen)
+        level1 = Level('Images/EcranAttente.png', self.screen)
 
         # Définition de la position horizontale de la caméra :
         camera_x = 0
@@ -128,8 +128,8 @@ class Game:
 
                 for rectangle in self.plateformListRect:
                     platform = Plateform(rectangle)
-                    self.plateformGroup.add(platform)
-                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(rectangle):
+                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(
+                            rectangle):
                         self.resist = (0, -10)
                         self.player.jumpCounter = 0
 
@@ -147,7 +147,7 @@ class Game:
                     pygame.mixer.music.load('Musique/musique.mp3')
                     pygame.mixer.music.set_volume(0.3)
                     pygame.mixer.music.play(-1)
-                    self.runningMusic=True
+                    self.runningMusic = True
                 # Dessine le player :
                 self.player.show(self.screen)
                 # Active la gravité
