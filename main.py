@@ -128,10 +128,24 @@ class Game:
 
                 for rectangle in self.plateformListRect:
                     platform = Plateform(rectangle)
-                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(
-                            rectangle):
+                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(rectangle):
                         self.resist = (0, -10)
                         self.player.jumpCounter = 0
+
+                    if self.player.rect.colliderect(platform.rect):
+                        dx = self.player.rect.centerx - platform.rect.centerx
+                        dy = self.player.rect.centery - platform.rect.centery
+
+                        if dy > 0:
+                            self.player.rect.y = (platform.rect.y + platform.rect.h)
+                            # self.resist = (0, 10)
+                        # Collision en haut de player.rect
+
+                        else:
+                            self.player.rect.y = (platform.rect.y - self.player.rect.h)
+                            # Collision en bas de player.rect
+
+
 
                     platform.show(self.screen)
 
