@@ -29,6 +29,9 @@ class Game:
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
 
+        self.horloge = pygame.time.Clock()
+        self.fps = 30
+
     # Boucle principale
     def main(self):
 
@@ -39,8 +42,6 @@ class Game:
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
-
-        timer = pygame.time.Clock()
 
         # Variable de jeux
         scroll_left = False
@@ -148,6 +149,8 @@ class Game:
 
             pygame.display.flip()
 
+            # Limite des fps
+            self.horloge.tick(self.fps)
             # Dessine les boutons
             if main_buttons_visible:
                 playButton.draw(self.screen, white)
@@ -162,9 +165,6 @@ class Game:
 
             # Affiche le bouton de fermeture redimensionné en haut à droite
             self.screen.blit(close_button, (1400 - closeButtonWidth, 0))
-
-            # On défini un laps de temps de 60 images par seconde par game loop
-            timer.tick(60)
 
         # Écran noir
         self.screen.fill(black)
