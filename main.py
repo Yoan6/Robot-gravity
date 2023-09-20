@@ -6,7 +6,8 @@ from player import *
 from player import Player
 from level import Level
 from ground import Ground
-
+from obstacles import Spike
+from advise import Advise
 
 class Game:
 
@@ -20,12 +21,11 @@ class Game:
         self.playerSpeedX = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.grounds = [Ground(0, 600, 1400, 900),
-                        Ground(500, 450, 300, 25)]
+        self.ground = Ground()
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
-        # Countour de l'ecran
+        self.runningMusic=False
         self.rect = pygame.Rect(0, 0, 1400, 900)
 
         # 1 = vers le bas, autre = vers le haut
@@ -133,6 +133,13 @@ class Game:
                 if self.player.jumped and self.touchGround:
                     if self.player.jumpCounter < 1:
                         self.player.jump()
+                if self.runningMusic==False:
+                    print("musique")
+                    pygame.mixer.init()
+                    pygame.mixer.music.load('Musique/musique.mp3')
+                    pygame.mixer.music.set_volume(0.3)
+                    pygame.mixer.music.play(-1)
+                    self.runningMusic=True
                 # Dessine le player :
                 self.player.show(self.screen)
                 # Active la gravité
@@ -164,7 +171,6 @@ class Game:
         self.screen.fill(black)
 
     def gravityGame(self):
-        print(self.resist)
         if self.gravityDirection == 1:
             self.player.rect.y += self.gravity[1] + self.resist[1]
         else:
