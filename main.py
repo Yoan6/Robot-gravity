@@ -20,10 +20,14 @@ class Game:
         self.screen = pygame.display.set_mode((1400, 900))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
-        self.player_x = 400
-        self.player_y = 400
+        self.player_x = 100
+        self.player_y = 128
         self.playerSpeedX = 0
-        self.taille = [32, 64]
+        self.right=False
+        self.left=False
+        self.gravityI=False
+        self.walkCount=0
+        self.taille = [128, 128]
         self.player = Player(self.player_x, self.player_y, self.taille)
         self.ground = Ground(0, 700, 1400, 900)
         self.gravity = (0, 10)
@@ -94,19 +98,29 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 18
+                            self.right=True
+                            self.left=False
 
-                        if event.key == pygame.K_LEFT:
+                        elif event.key == pygame.K_LEFT:
                             self.playerSpeedX = -18
-
+                            self.left=True
+                            self.right=False
+                        else:
+                            self.left=False
+                            self.right=False
                         if event.key == pygame.K_UP:
                             self.player.jumped = True
                             self.player.jumpCounter += 1
+                            self.left=False
+                            self.right=False
 
                         if event.key == pygame.K_SPACE and self.touchGround:
                             if self.gravityDirection == 1:
                                 self.gravityDirection = -1
+                                self.gravityI=True
                             else:
                                 self.gravityDirection = 1
+                                self.gravityI=False
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
@@ -163,7 +177,12 @@ class Game:
                     pygame.mixer.music.play(-1)
                     self.runningMusic = True
                 # Dessine le player :
-                self.player.show(self.screen)
+                if self.walkCount<15:
+                    self.walkCount=self.walkCount+1
+                else:
+                    self.walkCount=0
+                self.player.show(self.screen,self.right,self.left,self.walkCount,self.player_x,self.player_y)
+                
                 # Active la gravité
                 self.gravityGame()
                 self.player.rect.clamp_ip(self.rect)
