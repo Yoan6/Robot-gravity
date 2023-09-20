@@ -12,6 +12,7 @@ from obstacles import Spike
 from advise import Advise
 from plateform import Plateform
 
+
 class Game:
 
     def __init__(self):
@@ -22,7 +23,11 @@ class Game:
         self.player_x = 380
         self.player_y = 400
         self.playerSpeedX = 0
-        self.taille = [32, 64]
+        self.right=False
+        self.left=False
+        self.gravityI=False
+        self.walkCount=0
+        self.taille = [128, 128]
         self.player = Player(self.player_x, self.player_y, self.taille)
         self.ground = Ground(0, 767, 1024, 768)
         self.gravity = (0, 10)
@@ -33,10 +38,9 @@ class Game:
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
-        self.plateformGroup = Group()
         self.plateformListRect = [
             pygame.Rect(300, 500, 100, 50),
-            pygame.Rect(800, 500, 100, 50)
+            pygame.Rect(800, 400, 200, 50)
         ]
 
         self.horloge = pygame.time.Clock()
@@ -102,19 +106,29 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 18
+                            self.right=True
+                            self.left=False
 
-                        if event.key == pygame.K_LEFT:
+                        elif event.key == pygame.K_LEFT:
                             self.playerSpeedX = -18
-
+                            self.left=True
+                            self.right=False
+                        else:
+                            self.left=False
+                            self.right=False
                         if event.key == pygame.K_UP:
                             self.player.jumped = True
                             self.player.jumpCounter += 1
+                            self.left=False
+                            self.right=False
 
                         if event.key == pygame.K_SPACE and self.touchGround:
                             if self.gravityDirection == 1:
                                 self.gravityDirection = -1
+                                self.gravityI=True
                             else:
                                 self.gravityDirection = 1
+                                self.gravityI=False
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
@@ -136,10 +150,21 @@ class Game:
 
                 for rectangle in self.plateformListRect:
                     platform = Plateform(rectangle)
-                    self.plateformGroup.add(platform)
-                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(rectangle):
+                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(
+                            rectangle):
                         self.resist = (0, -10)
                         self.player.jumpCounter = 0
+
+                    if self.player.rect.colliderect(platform.rect):
+                        dx = self.player.rect.centerx - platform.rect.centerx
+                        dy = self.player.rect.centery - platform.rect.centery
+
+                        if dy > 0:
+                            self.player.rect.y = (platform.rect.y + platform.rect.h)
+                            # Collision en haut de player.rect
+                        else:
+                            self.player.rect.y = (platform.rect.y - self.player.rect.h)
+                            # Collision en bas de player.rect
 
                     platform.show(self.screen)
 
@@ -155,9 +180,14 @@ class Game:
                     pygame.mixer.music.load('Musique/musique.mp3')
                     pygame.mixer.music.set_volume(0.3)
                     pygame.mixer.music.play(-1)
-                    self.runningMusic=True
+                    self.runningMusic = True
                 # Dessine le player :
-                self.player.show(self.screen)
+                if self.walkCount<15:
+                    self.walkCount=self.walkCount+1
+                else:
+                    self.walkCount=0
+                self.player.show(self.screen,self.right,self.left,self.walkCount,self.player_x,self.player_y)
+
                 # Active la gravité
                 self.gravityGame()
                 self.player.rect.clamp_ip(self.rect)
