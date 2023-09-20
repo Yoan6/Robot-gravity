@@ -1,6 +1,8 @@
 import pygame
 import sys
 import pytmx
+from pygame.sprite import Group
+
 from button import Button
 from player import *
 from player import Player
@@ -8,6 +10,7 @@ from level import Level
 from ground import Ground
 from obstacles import Spike
 from advise import Advise
+from plateform import Plateform
 
 class Game:
 
@@ -21,15 +24,20 @@ class Game:
         self.playerSpeedX = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground()
+        self.ground = Ground(0, 600, 1400, 900)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
-        self.runningMusic=False
+        self.runningMusic = False
         self.rect = pygame.Rect(0, 0, 1400, 900)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
+        self.plateformGroup = Group()
+        self.plateformListRect = [
+            pygame.Rect(300, 500, 100, 50),
+            pygame.Rect(800, 500, 100, 50)
+        ]
 
         self.horloge = pygame.time.Clock()
         self.fps = 30
@@ -110,30 +118,30 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level1.update()
-                groundFound = False
-                for ground in self.grounds:
-                    if not groundFound:
-                        if ground.rect.colliderect(self.player.rect):
-                            # Si le personnage collisionne par le bas, la résistance doit se faire vers le bas, sinon vers le haut
-                            if ground.rect.y > self.player.y:
-                                self.resist = (0, -10)
-                            else:
-                                print('here')
-                                self.resist = (0, 10)
 
-                            self.touchGround = True
-                            self.player.jumpCounter = 0
-                            groundFound = True
-                        else:
-                            self.resist = (0, 0)
+                if self.ground.rect.colliderect(self.player.rect):
+                    self.resist = (0, -10)
+                    self.touchGround = True
+                    self.player.jumpCounter = 0
+                else:
+                    self.resist = (0, 0)
 
-                    # Dessine le sol
-                    ground.show(self.screen)
+                for rectangle in self.plateformListRect:
+                    platform = Plateform(rectangle)
+                    self.plateformGroup.add(platform)
+                    if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(rectangle):
+                        self.resist = (0, -10)
+                        self.player.jumpCounter = 0
+
+                    platform.show(self.screen)
+
+                # Dessine le sol
+                self.ground.show(self.screen)
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped and self.touchGround:
                     if self.player.jumpCounter < 1:
                         self.player.jump()
-                if self.runningMusic==False:
+                if not self.runningMusic:
                     print("musique")
                     pygame.mixer.init()
                     pygame.mixer.music.load('Musique/musique.mp3')
