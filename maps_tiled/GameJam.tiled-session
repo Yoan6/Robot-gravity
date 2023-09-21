@@ -1,0 +1,464 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "#1": {
+            "scaleInDock": 1
+        },
+        "#10": {
+            "scaleInDock": 1
+        },
+        "#10R": {
+            "scaleInDock": 1
+        },
+        "#11": {
+            "scaleInDock": 1
+        },
+        "#11R": {
+            "scaleInDock": 1
+        },
+        "#12": {
+            "scaleInDock": 1
+        },
+        "#13": {
+            "scaleInDock": 1
+        },
+        "#14": {
+            "scaleInDock": 1
+        },
+        "#15": {
+            "scaleInDock": 1
+        },
+        "#16": {
+            "scaleInDock": 1
+        },
+        "#1R": {
+            "scaleInDock": 1
+        },
+        "#2": {
+            "scaleInDock": 1
+        },
+        "#2R": {
+            "scaleInDock": 1
+        },
+        "#3": {
+            "scaleInDock": 1
+        },
+        "#3R": {
+            "scaleInDock": 1
+        },
+        "#4": {
+            "scaleInDock": 1
+        },
+        "#5": {
+            "scaleInDock": 1
+        },
+        "#6": {
+            "scaleInDock": 1
+        },
+        "#7": {
+            "scaleInDock": 1
+        },
+        "#7R": {
+            "scaleInDock": 1
+        },
+        "#8": {
+            "scaleInDock": 1
+        },
+        "#8R": {
+            "scaleInDock": 1
+        },
+        "#9": {
+            "scaleInDock": 1
+        },
+        "#NicePng_spike-spiegel-png_2287658": {
+            "scaleInDock": 1
+        },
+        "#Rbackground": {
+            "scaleInDock": 1
+        },
+        "#Reversed_NicePng_spike-spiegel-png_2287658": {
+            "scaleInDock": 1
+        },
+        "#pixil-frame-0_1": {
+            "scaleInDock": 1
+        },
+        "#rocket": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1848,
+                "y": 1550
+            }
+        },
+        "Level0.tmx#1": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#1R": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#2": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#2 R": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#3": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#3R": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#4": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#5": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#6": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#BG": {
+            "scaleInDock": 0.33
+        },
+        "Level0.tmx#Grass (1)": {
+            "scaleInDock": 1
+        },
+        "Level0.tmx#pixil-frame-0_1": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1528,
+                "y": 2564
+            }
+        },
+        "Level1.tmx#1": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#1R": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#2": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#2 R": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#2R": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#3": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#3R": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#4": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#5": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#6": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#BG": {
+            "scaleInDock": 0.33
+        },
+        "Level1.tmx#Grass (1)": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#Grass_1R": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#Rbackground": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#StoneR": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#pixil-frame-0_1": {
+            "scaleInDock": 1
+        },
+        "Level1.tmx#rocket": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 9632,
+                "y": 2628
+            }
+        },
+        "Level2.tmx#1": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#10R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#11R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#14": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#15": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#16": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#1R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#2": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#2R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#3": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#3R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#4": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#5": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#6": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#7": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#7R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#8": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#8R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#9": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#Grass_1R": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#NicePng_spike-spiegel-png_2287658": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#Rbackground": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#Reversed_NicePng_spike-spiegel-png_2287658": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#StoneR": {
+            "scaleInDock": 1
+        },
+        "Level2.tmx#pixil-frame-0_1": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 5392,
+                "y": 2692
+            }
+        },
+        "Level3.tmx#1": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#10": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#10R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#11": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#11R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#12": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#13": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#14": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#15": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#16": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#1R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#2": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#2R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#3": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#3R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#4": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#5": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#6": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#7": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#7R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#8": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#8R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#9": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#Grass_1R": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#NicePng_spike-spiegel-png_2287658": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#Rbackground": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#Reversed_NicePng_spike-spiegel-png_2287658": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#StoneR": {
+            "scaleInDock": 1
+        },
+        "Level3.tmx#pixil-frame-0_1": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2176,
+                "y": 3012
+            }
+        },
+        "Level_1.tmx#1": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#1R": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#2": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#2R": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#3": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#3R": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#4": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#5": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#6": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#Grass_1R": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#Rbackground": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#StoneR": {
+            "scaleInDock": 1
+        },
+        "Level_1.tmx#rocket": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "/home/thomas/PycharmProjects/Game-Jam-2023/maps",
+    "last.imagePath": "/home/thomas/PycharmProjects/Game-Jam-2023/maps/Rpng/Objects",
+    "map.height": 45,
+    "map.lastUsedExportFilter": "Tiled map files (*.tmx *.xml)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 128,
+    "map.tileWidth": 128,
+    "map.width": 135,
+    "openFiles": [
+    ],
+    "project": "GameJam.tiled-project",
+    "recentFiles": [
+        "Level3.tmx",
+        "Level2.tmx",
+        "Level1.tmx",
+        "Level0.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 50,
+        "width": 102
+    }
+}

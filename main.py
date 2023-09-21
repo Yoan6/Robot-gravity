@@ -42,7 +42,7 @@ class Game:
         self.win = Win(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
         self.wincond = Arms(1660, 220)
-        self.arms = True
+        self.winning=0
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -68,21 +68,21 @@ class Game:
         ]
 
         self.objectPic = [
-            #Spike(0,490,170,25),
-            #Spike(1000,110,20,25),
-            #Spike(454,670,115,25),
-            #Spike(1000,370,20,25),
-            #Spike(1080,370,20,25),
-            #Spike(1170,545,40,25),
-            #Spike(1265,142,20,25),
-            #Spike(1415,142,20,25),
-            #Spike(1587,762,170,25)
+            Spike(0,490,170,25),
+            Spike(1000,110,20,25),
+            Spike(454,670,115,25),
+            Spike(1000,370,20,25),
+            Spike(1080,370,20,25),
+            Spike(1170,545,40,25),
+            Spike(1265,142,20,25),
+            Spike(1415,142,20,25),
+            Spike(1587,762,170,25)
         ]
 
         self.objectAdv = [
-            Advise(210,200,"Vous pouvez vous inverser la gravité \n en Utilisant la touche espace ",100,10),
-            Advise(650,300,"Attention au piques. \n Ils tuent. C'est dangereux",100,10),
-            Advise(800,480,"Le but du niveau est de  \n récupérer votre bras en haut a droite du niveau",100,10)
+            Advise(210,200,"Vous pouvez inverser la gravité \n en utilisant la touche espace ",100,10),
+            Advise(650,300,"Attention aux pics. \n Ils tuent. C'est dangereux",100,10),
+            Advise(800,480,"Le but du niveau est de  \n récupérer votre bras en haut à droite",100,10)
         ]
 
 
@@ -190,16 +190,11 @@ class Game:
                             rectangle):
                         self.resist = (0, -10)
 
-                    if not self.arms:
-                        pygame.time.wait(2000)
-                        pygame.quit()
-
                     if self.wincond.rect.colliderect(self.player.rect):
-                        self.arms = False
-                        self.win.show()
-                        self.win.update()
-                        self.win.draw()
-
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
+                        self.winning=self.winning+1
 
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
@@ -216,7 +211,7 @@ class Game:
                             # Collision en bas de player.rect
 
                     # platform.show(self.screen)
-                        self.wincond.show(self.screen)
+                    self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
                     if self.player.rect.colliderect(pic):
@@ -229,13 +224,11 @@ class Game:
                         self.gameover.show()
                         self.gameover.update()
                         self.gameover.draw()
-
+                        
 
                     if self.player.nb_life<0:
                         pygame.time.wait(2000)
                         pygame.quit()
-
-
 
                     # pic.show(self.screen)
 
@@ -284,11 +277,15 @@ class Game:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
-
-
-
-
+                    
+                
+                    
+                    
                 if self.player.nb_life<0:
+                    pygame.time.wait(2000)
+                    pygame.quit()
+
+                if self.winning>50:
                     pygame.time.wait(2000)
                     pygame.quit()
 
