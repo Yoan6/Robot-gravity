@@ -215,15 +215,15 @@ class Game:
                         # La gravité doit forcément être vers le bas :
                         self.gravityDirection = 1
                         self.gravityInv = False
+                    if self.player.nb_life<=0:
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
+                        
 
-                        if self.player.nb_life==0:
-                            self.gameover.show()
-                            self.gameover.update()
-                            self.gameover.draw()
-                            pygame.time.wait(500)
-                            pygame.quit()
-
-
+                    if self.player.nb_life<0:
+                        pygame.time.wait(2000)
+                        pygame.quit()
 
                     # pic.show(self.screen)
 
@@ -273,11 +273,15 @@ class Game:
                     self.gameover.update()
                     self.gameover.draw()
                     
+                
+                    
+                    
                 if self.player.nb_life<0:
                     pygame.time.wait(2000)
                     pygame.quit()
-                    print("Deuxième condition")
 
+                if self.player.nb_life==0:
+                    self.player.nb_life=self.player.nb_life-1
 
 
             # Affiche les crédits
