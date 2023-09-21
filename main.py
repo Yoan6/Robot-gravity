@@ -121,6 +121,7 @@ class Game:
                         playButton.erase_button()
                         creditButton.erase_button()
                         level2.run()
+                        level2.draw_life()
                         level1Ran = True
 
                     # Clic sur le bouton Crédits
@@ -169,6 +170,7 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level2.update()
+                level2.draw_life()
                 self.gravityI = False
 
                 self.resist = (0, 0)
