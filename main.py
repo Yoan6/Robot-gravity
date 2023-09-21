@@ -189,9 +189,9 @@ class Game:
                         self.resist = (0, -10)
 
                     if self.wincond.rect.colliderect(self.player.rect):
-                        self.gameover.show()
-                        self.gameover.update()
-                        self.gameover.draw()
+                        image_win = pygame.image.load("Images/win.jpg")
+                        image_win = pygame.transform.scale(image_win, (self.screen_width, self.screen_height))
+                        self.screen.blit(image_win, (0,0))
                         self.winning=self.winning+1
 
                     if self.player.rect.colliderect(platform.rect):
@@ -209,7 +209,8 @@ class Game:
                             # Collision en bas de player.rect
 
                     # platform.show(self.screen)
-                    self.wincond.show(self.screen)
+                    if not self.wincond.rect.colliderect(self.player.rect):
+                        self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
                     if self.player.rect.colliderect(pic):
@@ -254,7 +255,9 @@ class Game:
                     self.walkCount = self.walkCount + 1
                 else:
                     self.walkCount = 0
-                self.player.show(self.screen, self.right, self.left, self.walkCount, self.gravityInv)
+
+                if not self.wincond.rect.colliderect(self.player.rect):
+                    self.player.show(self.screen, self.right, self.left, self.walkCount, self.gravityInv)
 
                 # Active la gravité
                 self.gravityGame()

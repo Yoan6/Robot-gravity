@@ -9,7 +9,5 @@ class Arms(object):
         
 
 
-    def show(self,win): 
-        #Décommenter la ligne d'en dessous pour voir la hitbox
-        #pygame.draw.rect(win, (255,0,0), self.rect, 2)
+    def show(self,win):
         win.blit(self.img, (self.x,self.y))

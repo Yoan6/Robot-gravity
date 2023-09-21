@@ -46,8 +46,6 @@ class Player(pygame.sprite.Sprite):
 
     # Fonction sauter
     def jump(self, gravity):
-        print(self.jumped)
-        print(gravity)
 
         if self.jumped:
             if self.jumpUp >= 9:
