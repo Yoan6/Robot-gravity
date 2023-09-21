@@ -43,7 +43,7 @@ class Game:
         self.plateformListRect = [
             pygame.Rect(300, 500, 100, 50),
             pygame.Rect(800, 400, 200, 50),
-            pygame.Rect(800, 600, 200, 50)
+            pygame.Rect(600, 600, 200, 50)
         ]
 
         self.horloge = pygame.time.Clock()
@@ -137,12 +137,8 @@ class Game:
             if level1Ran:
                 level3.update()
                 self.gravityI = False
-                if self.ground.rect.colliderect(self.player.rect):
-                    self.resist = (0, -10)
-                    self.player.jumpCounter = 0
-                    self.gravityI = True
-                else:
-                    self.resist = (0, 0)
+
+                self.resist = (0, 0)
 
                 for rectangle in self.plateformListRect:
                     platform = Plateform(rectangle)
@@ -165,8 +161,6 @@ class Game:
 
                     platform.show(self.screen)
 
-                # Dessine le sol
-                self.ground.show(self.screen)
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped:
                     if self.player.jumpCounter < 1:
