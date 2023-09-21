@@ -46,7 +46,7 @@ class Game:
         self.plateformListRect = [
             pygame.Rect(0, 500, 175, 400),
             pygame.Rect(15, 270, 225, 30),
-            pygame.Rect(260, 0, 275, 90),
+            pygame.Rect(260, 0, 250, 90),
             pygame.Rect(450, 240, 100, 60),
             pygame.Rect(450, 690, 125, 350),
             pygame.Rect(600, 360, 100, 60),
@@ -191,13 +191,14 @@ class Game:
 
                         if dy > 0:
                             self.player.rect.y = (platform.rect.y + platform.rect.h)
+                            self.player.jumpCounter = 0
                             # Collision en haut de player.rect
                         else:
                             self.player.rect.y = (platform.rect.y - self.player.rect.h)
                             self.player.jumpCounter = 0
                             # Collision en bas de player.rect
 
-                    # platform.show(self.screen)
+                    platform.show(self.screen)
                     self.wincond.show(self.screen)
 
                 for pic in self.objectPic:

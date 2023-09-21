@@ -46,8 +46,11 @@ class Player(pygame.sprite.Sprite):
 
     # Fonction sauter
     def jump(self, gravity):
+        print(self.jumped)
+        print(gravity)
+
         if self.jumped:
-            if self.jumpUp >= 12:
+            if self.jumpUp >= 9:
                 self.jumpDown -= 1
                 self.jumpStatus = self.jumpDown
 
@@ -60,7 +63,9 @@ class Player(pygame.sprite.Sprite):
                 self.jumpDown = 5
                 self.jumped = False
 
+            # Sauter dans la bonne direction en fonction de la gravité
             if gravity == 1:
                 self.rect.y -= (10 * (self.jumpStatus / 2))
             else:
                 self.rect.y += (10 * (self.jumpStatus / 2))
+
