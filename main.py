@@ -29,6 +29,7 @@ class Game:
         self.right = False
         self.left = False
         self.gravityI = False
+        self.gravityInv=False
         self.walkCount = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
@@ -120,8 +121,10 @@ class Game:
                         if event.key == pygame.K_SPACE:
                             if self.gravityDirection == 1 and self.gravityI:
                                 self.gravityDirection = -1
+                                self.gravityInv=True
                             elif self.gravityI:
                                 self.gravityDirection = 1
+                                self.gravityInv=False
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
@@ -182,7 +185,7 @@ class Game:
                     self.walkCount = self.walkCount + 1
                 else:
                     self.walkCount = 0
-                self.player.show(self.screen, self.right, self.left, self.walkCount, self.gravityI)
+                self.player.show(self.screen, self.right, self.left, self.walkCount, self.gravityInv)
 
                 # Active la gravité
                 self.gravityGame()
