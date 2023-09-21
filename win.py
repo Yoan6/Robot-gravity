@@ -4,7 +4,7 @@ import pygame
 class Win:
     def __init__(self, screen):
         self.screen = screen
-        image = pygame.image.load("Images/farm.png")  # Chargez l'image depuis le fichier
+        image = pygame.image.load("Images/win.jpg")  # Chargez l'image depuis le fichier
         self.image = pygame.transform.scale(image, (1700, 900))
         self.image_rect = self.image.get_rect()
         self.show_window = False

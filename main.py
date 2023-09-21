@@ -68,15 +68,15 @@ class Game:
         ]
 
         self.objectPic = [
-            Spike(0,490,170,25),
-            Spike(1000,110,20,25),
-            Spike(454,670,115,25),
-            Spike(1000,370,20,25),
-            Spike(1080,370,20,25),
-            Spike(1170,545,40,25),
-            Spike(1265,142,20,25),
-            Spike(1415,142,20,25),
-            Spike(1587,762,170,25)
+            #Spike(0,490,170,25),
+            #Spike(1000,110,20,25),
+            #Spike(454,670,115,25),
+            #Spike(1000,370,20,25),
+            #Spike(1080,370,20,25),
+            #Spike(1170,545,40,25),
+            #Spike(1265,142,20,25),
+            #Spike(1415,142,20,25),
+            #Spike(1587,762,170,25)
         ]
 
         self.objectAdv = [
@@ -191,9 +191,9 @@ class Game:
                         self.resist = (0, -10)
 
                     if self.wincond.rect.colliderect(self.player.rect):
-                        self.gameover.show()
-                        self.gameover.update()
-                        self.gameover.draw()
+                        self.win.show()
+                        self.win.update()
+                        self.win.draw()
                         self.winning=self.winning+1
 
                     if self.player.rect.colliderect(platform.rect):

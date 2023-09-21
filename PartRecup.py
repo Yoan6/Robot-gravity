@@ -1,5 +1,6 @@
 import pygame
 
+
 class Arms(object):
     def __init__(self,x,y):
         self.img = pygame.image.load('Images/SpriteRobot/Arms.png')
