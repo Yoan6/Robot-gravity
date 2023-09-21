@@ -7,7 +7,7 @@ class Level:
         self.name_lvl = name_lvl
         self.display_surface = surface
         map = pygame.image.load(map_path)
-        self.zoom = 1
+        self.zoom = 1.2
         screenWidth = 1024  # Spécifiez la largeur souhaitée
         screenHeight = 768  # Spécifiez la hauteur souhaitée
         self.window = pygame.display.set_mode((screenWidth, screenHeight))
@@ -18,8 +18,11 @@ class Level:
     def run(self):
         self.window.blit(self.fond_ecran_zoom, (0, 0))
         pygame.display.set_caption(self.name_lvl)
-        #self.window.blit(self.map, (0, 0))
-        #tmx_data = pytmx.util_pygame.load_pygame('maps/TestLevel')
 
     def update(self):
         self.window.blit(self.fond_ecran_zoom, (0, 0))
+
+    def death(self):
+        death = pygame.image.load("Images/gameover.jpg")
+        death = pygame.transform.scale(death, (1024, 768))
+        self.window.blit(death, (0,0))

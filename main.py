@@ -11,13 +11,16 @@ from ground import Ground
 from obstacles import Spike
 from advise import Advise
 from plateform import Plateform
+from gameover import *
 
 
 class Game:
 
     def __init__(self):
         # Configuration de la taille de la fenêtre
-        self.screen = pygame.display.set_mode((1024, 768))
+        self.screen_width = 1024
+        self.screen_height = 768
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
         self.player_x = 380
@@ -29,12 +32,12 @@ class Game:
         self.walkCount=0
         self.taille = [128, 128]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground(0, 767, 1024, 768)
+        self.ground = Ground(0, 767, self.screen_width, self.screen_height)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.touchGround = False
         self.runningMusic = False
-        self.rect = pygame.Rect(0, 0, 1024, 768)
+        self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -62,11 +65,6 @@ class Game:
         level2 = Level('maps/Level2.png', self.screen, "Niveau 2")
         # 3ème niveau
         level3 = Level('maps/Level3.png', self.screen, "Niveau 3")
-        # 4ème niveau
-        #level4 = Level('maps/Level4.png', self.screen, "Niveau 4")
-
-        # Définition de la position horizontale de la caméra :
-        camera_x = 0
 
         # Variable pour indiquer si les boutons sont visibles ou non
         main_buttons_visible = True
@@ -87,7 +85,7 @@ class Game:
                         # On ne doit plus pouvoir cliquer sur les boutons
                         playButton.erase_button()
                         creditButton.erase_button()
-                        level1.run()
+                        level3.run()
                         level1Ran = True
 
                     # Clic sur le bouton Crédits
@@ -98,7 +96,7 @@ class Game:
                         creditButton.erase_button()
 
                     # Clic sur la croix de fermeture de fenêtre
-                    elif 1024 - closeButtonWidth < x < 1024 and 0 < y < closeButtonHeight:
+                    elif self.screen_width - closeButtonWidth < x < self.screen_width and 0 < y < closeButtonHeight:
                         self.running = False
 
                 # Deplacements
@@ -139,7 +137,7 @@ class Game:
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
-                level1.update()
+                level3.update()
 
                 if self.ground.rect.colliderect(self.player.rect):
                     self.resist = (0, -10)
@@ -195,9 +193,8 @@ class Game:
                 pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 1)
 
             elif creditRan:
-                print("Entré dans les crédits")
-
-
+                credits = Button("Développé par : \n - Yoan Delannoy \n - Aurèle Dunand \n\n Musique et effets sonores : \n - Esteban Elias Pueyo \n - Musique venant de ... \n\n Éléments graphiques, visuel \n - Esteban Elias Pueyo \n - Thommas Boussit - Principal graphiste", 0, 0, self.screen_width, self.screen_height, black)
+                credits.draw(self.screen, white)
             pygame.display.flip()
 
             # Limite des fps
@@ -215,7 +212,7 @@ class Game:
             close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
 
             # Affiche le bouton de fermeture redimensionné en haut à droite
-            self.screen.blit(close_button, (1024 - closeButtonWidth, 0))
+            self.screen.blit(close_button, (self.screen_width - closeButtonWidth, 0))
 
         # Écran noir
         self.screen.fill(black)
