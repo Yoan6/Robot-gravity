@@ -36,6 +36,7 @@ class Game:
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.runningMusic = False
+        self.gameover = GameOver(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
 
         # 1 = vers le bas, autre = vers le haut
@@ -186,10 +187,17 @@ class Game:
 
                 # Active la gravité
                 self.gravityGame()
-                self.player.rect.clamp_ip(self.rect)
                 self.player.move(self.playerSpeedX)
-                pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 1)
 
+                # Si le joueur rencontre sort de la map, gameover
+                if not self.player.rect.colliderect(self.rect):
+                    print('sorti')
+                    self.gameover.show()
+                    self.gameover.update()
+                    self.gameover.draw()
+
+
+            # Affiche les crédits
             elif creditRan:
                 credits = Button("Développé par : \n - Yoan Delannoy \n - Aurèle Dunand \n\n Musique et effets sonores : \n - Esteban Elias Pueyo \n - Musique venant de ... \n\n Éléments graphiques, visuel \n - Esteban Elias Pueyo \n - Thommas Boussit - Principal graphiste", 0, 0, self.screen_width, self.screen_height, black)
                 credits.draw(self.screen, white)
