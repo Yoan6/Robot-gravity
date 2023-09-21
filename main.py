@@ -13,6 +13,7 @@ from advise import Advise
 from plateform import Plateform
 from gameover import *
 from PartRecup import Arms
+from win import Win
 
 
 class Game:
@@ -38,8 +39,10 @@ class Game:
         self.resist = (0, 0)
         self.runningMusic = False
         self.gameover = GameOver(self.screen)
+        self.win = Win(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
         self.wincond = Arms(1660, 220)
+        self.arms = True
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -65,15 +68,15 @@ class Game:
         ]
 
         self.objectPic = [
-            Spike(0,490,170,25),
-            Spike(1000,110,20,25),
-            Spike(454,670,115,25),
-            Spike(1000,370,20,25),
-            Spike(1080,370,20,25),
-            Spike(1170,545,40,25),
-            Spike(1265,142,20,25),
-            Spike(1415,142,20,25),
-            Spike(1587,762,170,25)
+            #Spike(0,490,170,25),
+            #Spike(1000,110,20,25),
+            #Spike(454,670,115,25),
+            #Spike(1000,370,20,25),
+            #Spike(1080,370,20,25),
+            #Spike(1170,545,40,25),
+            #Spike(1265,142,20,25),
+            #Spike(1415,142,20,25),
+            #Spike(1587,762,170,25)
         ]
 
         self.objectAdv = [
@@ -187,8 +190,10 @@ class Game:
                         self.resist = (0, -10)
 
                     if self.wincond.rect.colliderect(self.player.rect) :
-                        self.player.rect.x=10
-                        self.player.rect.y=200
+                        self.arms = False
+                        self.win.show()
+                        self.win.update()
+                        self.win.draw()
 
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
@@ -204,7 +209,8 @@ class Game:
                             # Collision en bas de player.rect
 
                     # platform.show(self.screen)
-                    self.wincond.show(self.screen)
+                    if self.arms :
+                        self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
                     if self.player.rect.colliderect(pic):
@@ -218,6 +224,7 @@ class Game:
                             self.gameover.show()
                             self.gameover.update()
                             self.gameover.draw()
+
                             pygame.time.wait(500)
                             pygame.quit()
 
@@ -231,7 +238,6 @@ class Game:
                         ShowBubble=True
                     adv.show(self.screen,ShowBubble)
                     ShowBubble=False
-
 
 
                 # Le joueur ne peut faire qu'un saut
