@@ -30,7 +30,7 @@ class Game:
         self.left = False
         self.gravityI = False
         self.walkCount = 0
-        self.taille = [128, 128]
+        self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
         self.ground = Ground(0, 767, self.screen_width, self.screen_height)
         self.gravity = (0, 10)
@@ -182,7 +182,7 @@ class Game:
                     self.walkCount = self.walkCount + 1
                 else:
                     self.walkCount = 0
-                self.player.show(self.screen, self.right, self.left, self.walkCount, self.player_x, self.player_y)
+                self.player.show(self.screen, self.right, self.left, self.walkCount, self.gravityI)
 
                 # Active la gravité
                 self.gravityGame()
