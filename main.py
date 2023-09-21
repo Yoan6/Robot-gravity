@@ -18,7 +18,7 @@ class Game:
 
     def __init__(self):
         # Configuration de la taille de la fenêtre
-        self.screen_width = 1400
+        self.screen_width = 1700
         self.screen_height = 900
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Page d'accueil")
@@ -71,11 +71,12 @@ class Game:
         black: tuple[int, int, int] = (0, 0, 0)
 
         # 1er niveau
-        level1 = Level('maps/Level1.png', self.screen, "Niveau 1", (1, 1, 1, 1))
+        level1 = Level('maps/Level1.png', self.screen, "Niveau 1", self.player)
         # 2ème niveau
-        level2 = Level('maps/Level2.png', self.screen, "Niveau 2", (1, 1, 1, 1))
+        level2 = Level('maps/Level2.png', self.screen, "Niveau 2", self.player)
         # 3ème niveau
-        level3 = Level('maps/Level3.png', self.screen, "Niveau 3", (1, 1, 1, 1))
+        level3 = Level('maps/Level3.png', self.screen, "Niveau 3", self.player)
+        level2.spawn()
 
         # Variable pour indiquer si les boutons sont visibles ou non
         main_buttons_visible = True
