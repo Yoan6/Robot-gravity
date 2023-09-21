@@ -13,39 +13,40 @@ class Player(pygame.sprite.Sprite):
         self.jumpDown = 5
         self.jumped = False
         self.jumpCounter = 0
-        self.walkRight = [pygame.image.load('Images/SpriteRobot/WalkingLegs11.png'), pygame.image.load('Images/SpriteRobot/WalkingLegs21.png')]
-        self.walkLeft = [pygame.image.load('Images/SpriteRobot/WalkingLegs12.png'), pygame.image.load('Images/SpriteRobot/WalkingLegs22.png')]
-        self.walkRightI = [pygame.image.load('Images/SpriteRobot/WalkingLegsInversed11.png'), pygame.image.load('Images/SpriteRobot/WalkingLegsInversed21.png')]
-        self.walkLeftI = [pygame.image.load('Images/SpriteRobot/WalkingLegsInversed12.png'), pygame.image.load('Images/SpriteRobot/WalkingLegsInversed22.png')]       
+        self.walkRight = [pygame.image.load('Images/SpriteRobot/WalkingLegs11.png'),
+                          pygame.image.load('Images/SpriteRobot/WalkingLegs21.png')]
+        self.walkLeft = [pygame.image.load('Images/SpriteRobot/WalkingLegs12.png'),
+                         pygame.image.load('Images/SpriteRobot/WalkingLegs22.png')]
+        self.walkRightI = [pygame.image.load('Images/SpriteRobot/WalkingLegsInversed11.png'),
+                           pygame.image.load('Images/SpriteRobot/WalkingLegsInversed21.png')]
+        self.walkLeftI = [pygame.image.load('Images/SpriteRobot/WalkingLegsInversed12.png'),
+                          pygame.image.load('Images/SpriteRobot/WalkingLegsInversed22.png')]
         self.char = pygame.image.load('Images/SpriteRobot/StandingWithouArms.png')
         self.charI = pygame.image.load('Images/SpriteRobot/StandingWithouArmsInverse.png')
-
-
 
     def move(self, speed):
         self.rect.x += speed
 
-    def show(self, surface,right,left,walkCount,gravity):
+    def show(self, surface, right, left, walkCount, gravity):
         if gravity:
             if right:
-                surface.blit(self.walkRightI[walkCount//8], (self.rect.x,self.rect.y))
+                surface.blit(self.walkRightI[walkCount // 8], (self.rect.x, self.rect.y))
             elif left:
-                surface.blit(self.walkLeftI[walkCount//8], (self.rect.x,self.rect.y))
+                surface.blit(self.walkLeftI[walkCount // 8], (self.rect.x, self.rect.y))
             else:
-                surface.blit(self.charI, (self.rect.x,self.rect.y))
+                surface.blit(self.charI, (self.rect.x, self.rect.y))
         else:
             if right:
-                surface.blit(self.walkRight[walkCount//8], (self.rect.x,self.rect.y))
+                surface.blit(self.walkRight[walkCount // 8], (self.rect.x, self.rect.y))
             elif left:
-                surface.blit(self.walkLeft[walkCount//8], (self.rect.x,self.rect.y))
+                surface.blit(self.walkLeft[walkCount // 8], (self.rect.x, self.rect.y))
             else:
-                surface.blit(self.char, (self.rect.x,self.rect.y))
+                surface.blit(self.char, (self.rect.x, self.rect.y))
 
-
-
+    # Fonction sauter
     def jump(self):
         if self.jumped:
-            if self.jumpUp >= 8:
+            if self.jumpUp >= 6:
                 self.jumpDown -= 1
                 self.jumpStatus = self.jumpDown
 
