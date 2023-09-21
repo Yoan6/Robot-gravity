@@ -184,7 +184,7 @@ class Game:
                     self.walkCount=self.walkCount+1
                 else:
                     self.walkCount=0
-                self.player.show(self.screen,self.right,self.left,self.walkCount,self.player_x,self.player_y)
+                self.player.show(self.screen,self.right,self.left,self.walkCount,self.gravityI)
 
                 # Active la gravité
                 self.gravityGame()
