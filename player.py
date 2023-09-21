@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.walkRightI = [pygame.image.load('Images/SpriteRobot/WalkingLegsInversed11.png'), pygame.image.load('Images/SpriteRobot/WalkingLegsInversed21.png')]
         self.walkLeftI = [pygame.image.load('Images/SpriteRobot/WalkingLegsInversed12.png'), pygame.image.load('Images/SpriteRobot/WalkingLegsInversed22.png')]       
         self.char = pygame.image.load('Images/SpriteRobot/StandingWithouArms.png')
+        self.charI = pygame.image.load('Images/SpriteRobot/StandingWithouArmsInverse.png')
 
 
 
@@ -31,7 +32,7 @@ class Player(pygame.sprite.Sprite):
             elif left:
                 surface.blit(self.walkLeftI[walkCount//8], (self.rect.x,self.rect.y))
             else:
-                surface.blit(self.char, (self.rect.x,self.rect.y))
+                surface.blit(self.charI, (self.rect.x,self.rect.y))
         else:
             if right:
                 surface.blit(self.walkRight[walkCount//8], (self.rect.x,self.rect.y))
@@ -39,6 +40,8 @@ class Player(pygame.sprite.Sprite):
                 surface.blit(self.walkLeft[walkCount//8], (self.rect.x,self.rect.y))
             else:
                 surface.blit(self.char, (self.rect.x,self.rect.y))
+
+
 
     def jump(self):
         if self.jumped:
