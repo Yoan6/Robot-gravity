@@ -68,15 +68,15 @@ class Game:
         ]
 
         self.objectPic = [
-            Spike(0,490,170,25),
-            Spike(1000,110,20,25),
-            Spike(454,670,115,25),
-            Spike(1000,370,20,25),
-            Spike(1080,370,20,25),
-            Spike(1170,545,40,25),
-            Spike(1265,142,20,25),
-            Spike(1415,142,20,25),
-            Spike(1587,762,170,25)
+            #Spike(0,490,170,25),
+            #Spike(1000,110,20,25),
+            #Spike(454,670,115,25),
+            #Spike(1000,370,20,25),
+            #Spike(1080,370,20,25),
+            #Spike(1170,545,40,25),
+            #Spike(1265,142,20,25),
+            #Spike(1415,142,20,25),
+            #Spike(1587,762,170,25)
         ]
 
         self.objectAdv = [
@@ -190,12 +190,17 @@ class Game:
                             rectangle):
                         self.resist = (0, -10)
 
+                    if not self.arms:
+                        pygame.time.wait(2000)
+                        pygame.quit()
+
                     if self.wincond.rect.colliderect(self.player.rect):
-                        self.player.rect.x = 10
-                        self.player.rect.y = 200
+                        self.arms = False
                         self.win.show()
                         self.win.update()
                         self.win.draw()
+
+
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
                         dy = self.player.rect.centery - platform.rect.centery
@@ -211,7 +216,6 @@ class Game:
                             # Collision en bas de player.rect
 
                     # platform.show(self.screen)
-                    if self.arms :
                         self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
