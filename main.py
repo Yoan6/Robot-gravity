@@ -77,9 +77,9 @@ class Game:
         ]
 
         self.objectAdv = [
-            Advise(210,200,"Vous pouvez vous inverser la gravité \n en Utilisant la touche espace ",100,10),
-            Advise(650,300,"Attention au piques. \n Ils tuent. C'est dangereux",100,10),
-            Advise(800,480,"Le but du niveau est de  \n récupérer votre bras en haut a droite du niveau",100,10)
+            Advise(210,200,"Vous pouvez inverser la gravité \n en utilisant la touche espace ",100,10),
+            Advise(650,300,"Attention aux pics. \n Ils tuent. C'est dangereux",100,10),
+            Advise(800,480,"Le but du niveau est de  \n récupérer votre bras en haut à droite",100,10)
         ]
 
 
