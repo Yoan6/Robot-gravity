@@ -30,7 +30,7 @@ class Game:
         self.playerSpeedX = 0
         self.right = False
         self.left = False
-        self.gravityI = False
+        self.gravityReversable = False
         self.gravityInv = False
         self.walkCount = 0
         self.taille = [32, 60]
@@ -49,7 +49,7 @@ class Game:
         self.plateformListRect = [
             pygame.Rect(0, 500, 175, 400),
             pygame.Rect(15, 270, 225, 30),
-            pygame.Rect(260, 0, 275, 90),
+            pygame.Rect(260, 0, 250, 90),
             pygame.Rect(450, 240, 100, 60),
             pygame.Rect(450, 690, 125, 350),
             pygame.Rect(600, 360, 100, 60),
@@ -68,20 +68,21 @@ class Game:
         ]
 
         self.objectPic = [
-            #Spike(0,490,170,25),
-            #Spike(1000,110,20,25),
-            #Spike(454,670,115,25),
-            #Spike(1000,370,20,25),
-            #Spike(1080,370,20,25),
-            #Spike(1170,545,40,25),
-            #Spike(1265,142,20,25),
-            #Spike(1415,142,20,25),
-            #Spike(1587,762,170,25)
+            Spike(0,490,170,25),
+            Spike(1000,110,20,25),
+            Spike(454,670,115,25),
+            Spike(1000,370,20,25),
+            Spike(1080,370,20,25),
+            Spike(1170,545,40,25),
+            Spike(1265,142,20,25),
+            Spike(1415,142,20,25),
+            Spike(1587,762,170,25)
         ]
 
         self.objectAdv = [
-            
-            #Advise(210,200,"Un jour fut née un Grand sage. \n Sa Phrase préférée? Fuck Yoan.",100,10)
+            Advise(210,200,"Vous pouvez vous inverser la gravité \n en Utilisant la touche espace ",100,10),
+            Advise(650,300,"Attention au piques. \n Ils tuent. C'est dangereux",100,10),
+            Advise(800,480,"Le but du niveau est de  \n récupérer votre bras en haut a droite du niveau",100,10)
         ]
 
 
@@ -115,7 +116,7 @@ class Game:
         creditRan = False
 
         while self.running:
-            
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -159,10 +160,10 @@ class Game:
 
                         # Inversion de la gravité si on peut (gravityI)
                         if event.key == pygame.K_SPACE:
-                            if self.gravityDirection == 1 and self.gravityI:
+                            if self.gravityDirection == 1 and self.gravityReversable:
                                 self.gravityDirection = -1
                                 self.gravityInv = True
-                            elif self.gravityI:
+                            elif self.gravityReversable:
                                 self.gravityDirection = 1
                                 self.gravityInv = False
 
@@ -176,10 +177,10 @@ class Game:
                             self.left = False
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
-            if level1Ran:              
+            if level1Ran:
                 level2.update()
                 level2.draw_life()
-                self.gravityI = False
+                self.gravityReversable = False
 
                 self.resist = (0, 0)
 
@@ -189,19 +190,20 @@ class Game:
                             rectangle):
                         self.resist = (0, -10)
 
-                    if self.wincond.rect.colliderect(self.player.rect) :
-                        self.arms = False
+                    if self.wincond.rect.colliderect(self.player.rect):
+                        self.player.rect.x = 10
+                        self.player.rect.y = 200
                         self.win.show()
                         self.win.update()
                         self.win.draw()
-
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
                         dy = self.player.rect.centery - platform.rect.centery
-                        self.gravityI = True
+                        self.gravityReversable = True
 
                         if dy > 0:
                             self.player.rect.y = (platform.rect.y + platform.rect.h)
+                            self.player.jumpCounter = 0
                             # Collision en haut de player.rect
                         else:
                             self.player.rect.y = (platform.rect.y - self.player.rect.h)
@@ -219,14 +221,15 @@ class Game:
                         # La gravité doit forcément être vers le bas :
                         self.gravityDirection = 1
                         self.gravityInv = False
+                    if self.player.nb_life<=0:
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
 
-                        if self.player.nb_life==0:
-                            self.gameover.show()
-                            self.gameover.update()
-                            self.gameover.draw()
 
-                            pygame.time.wait(500)
-                            pygame.quit()
+                    if self.player.nb_life<0:
+                        pygame.time.wait(2000)
+                        pygame.quit()
 
 
 
@@ -240,10 +243,11 @@ class Game:
                     ShowBubble=False
 
 
+
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped:
                     if self.player.jumpCounter < 1:
-                        self.player.jump()
+                        self.player.jump(self.gravityDirection)
                 if not self.runningMusic:
                     pygame.mixer.init()
                     pygame.mixer.music.load('Musique/musique.mp3')
@@ -263,7 +267,7 @@ class Game:
 
                 # Si le joueur sort de la map, il revient au spawn et perd une vie
                 if not self.player.rect.colliderect(self.rect):
-                    
+
                     level2.spawn()
                     # La gravité doit forcément être vers le bas :
                     self.gravityDirection = 1
@@ -276,13 +280,16 @@ class Game:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
-                    print("Première condition")
+
+
+
 
                 if self.player.nb_life<0:
                     pygame.time.wait(2000)
                     pygame.quit()
-                    print("Deuxième condition")
 
+                if self.player.nb_life==0:
+                    self.player.nb_life=self.player.nb_life-1
 
 
             # Affiche les crédits
@@ -298,8 +305,6 @@ class Game:
             if main_buttons_visible:
                 playButton.draw(self.screen, white)
                 creditButton.draw(self.screen, white)
-
-            
 
         # Écran noir
         self.screen.fill(black)
