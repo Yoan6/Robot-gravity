@@ -33,13 +33,13 @@ class Game:
         self.gravityInv = False
         self.walkCount = 0
         self.taille = [32, 60]
-        self.player = Player(self.player_x, self.player_y, self.taille)
+        self.player = Player(self.player_x, self.player_y, self.taille, 10)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.runningMusic = False
         self.gameover = GameOver(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
-        self.wincond = Arms(128, 100)
+        self.wincond = Arms(900, 100)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -103,6 +103,7 @@ class Game:
                         creditButton.erase_button()
                         level2.run()
                         level1Ran = True
+                        level2.draw_life()
 
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
@@ -150,6 +151,7 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level2.update()
+                level2.draw_life()
                 self.gravityI = False
 
                 self.resist = (0, 0)
@@ -196,7 +198,6 @@ class Game:
                     if self.player.jumpCounter < 1:
                         self.player.jump()
                 if not self.runningMusic:
-                    print("musique")
                     pygame.mixer.init()
                     pygame.mixer.music.load('Musique/musique.mp3')
                     pygame.mixer.music.set_volume(0.2)

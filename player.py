@@ -2,8 +2,9 @@ import pygame
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y, taille):
+    def __init__(self, x, y, taille, nb_life):
         super().__init__()
+        self.nb_life = nb_life
         self.x = x
         self.y = y
         self.taille = taille
