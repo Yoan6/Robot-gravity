@@ -62,11 +62,12 @@ class Game:
         black: tuple[int, int, int] = (0, 0, 0)
 
         # 1er niveau
-        level1 = Level('maps/Level1.png', self.screen, "Niveau 1", (1, 1, 1, 1))
+        level1 = Level('maps/Level1.png', self.screen, "Niveau 1", self.player)
         # 2ème niveau
-        level2 = Level('maps/Level2.png', self.screen, "Niveau 2", (1, 1, 1, 1))
+        level2 = Level('maps/Level2.png', self.screen, "Niveau 2", self.player)
         # 3ème niveau
-        level3 = Level('maps/Level3.png', self.screen, "Niveau 3", (1, 1, 1, 1))
+        level3 = Level('maps/Level3.png', self.screen, "Niveau 3", self.player)
+        level2.spawn()
 
         # Variable pour indiquer si les boutons sont visibles ou non
         main_buttons_visible = True
@@ -87,7 +88,7 @@ class Game:
                         # On ne doit plus pouvoir cliquer sur les boutons
                         playButton.erase_button()
                         creditButton.erase_button()
-                        level3.run()
+                        level2.run()
                         level1Ran = True
 
                     # Clic sur le bouton Crédits
@@ -138,7 +139,7 @@ class Game:
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
-                level3.update()
+                level2.update()
                 self.gravityI = False
                 if self.ground.rect.colliderect(self.player.rect):
                     self.resist = (0, -10)
