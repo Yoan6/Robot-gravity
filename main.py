@@ -34,27 +34,46 @@ class Game:
         self.walkCount = 0
         self.taille = [32, 60]
         self.player = Player(self.player_x, self.player_y, self.taille, 10)
-        self.gravity = (0, 10)
+        self.gravity = (0, 20)
         self.resist = (0, 0)
         self.runningMusic = False
         self.gameover = GameOver(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
-        self.wincond = Arms(900, 100)
+        self.wincond = Arms(1660, 220)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
         self.plateformListRect = [
-            pygame.Rect(300, 500, 100, 50),
+            pygame.Rect(0, 500, 175, 400),
+            pygame.Rect(15, 270, 225, 30),
+            pygame.Rect(260, 0, 275, 90),
+            pygame.Rect(450, 240, 100, 60),
+            pygame.Rect(450, 690, 125, 350),
+            pygame.Rect(600, 360, 100, 60),
+            pygame.Rect(750, 570, 100, 400),
+            pygame.Rect(925, 0, 100, 120),
+            pygame.Rect(1005, 390, 90, 25),
+            pygame.Rect(1170, 0, 120, 150),
+            pygame.Rect(1170, 570, 100, 400),
+            pygame.Rect(1360, 0, 80, 150),
+            pygame.Rect(1340, 570, 135, 25),
+            pygame.Rect(1512, 0, 275, 150),
+            pygame.Rect(1605, 150, 100, 35),
+            pygame.Rect(1650, 185, 50, 30),
+            pygame.Rect(1590, 775, 150, 200)
 
-            pygame.Rect(0, 440, 100, 400),
-            pygame.Rect(13, 230, 150, 20),
-            pygame.Rect(150, 0, 160, 80)
         ]
 
         self.objectPic = [
-            Spike(300,500),
-            Spike(800,400),
-            Spike(600,600)
+            Spike(0,490,170,25),
+            Spike(800,400,100,128),
+            Spike(600,600,100,128),
+            Spike(300,500,100,128),
+            Spike(800,400,100,128),
+            Spike(600,600,100,128),
+            Spike(300,500,100,128),
+            Spike(800,400,100,128),
+            Spike(600,600,100,128)
         ]
 
 
@@ -103,7 +122,6 @@ class Game:
                         creditButton.erase_button()
                         level2.run()
                         level1Ran = True
-                        level2.draw_life()
 
                     # Clic sur le bouton Crédits
                     elif creditButton.x < x < creditButton.x + creditButton.largeur and creditButton.y < y < creditButton.y + creditButton.hauteur:
@@ -151,7 +169,6 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level2.update()
-                level2.draw_life()
                 self.gravityI = False
 
                 self.resist = (0, 0)
@@ -179,7 +196,7 @@ class Game:
                             self.player.jumpCounter = 0
                             # Collision en bas de player.rect
 
-                    platform.show(self.screen)
+                    # platform.show(self.screen)
                     self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
@@ -189,7 +206,7 @@ class Game:
                         self.gameover.draw()
 
 
-                    #pic.show(self.screen)
+                    pic.show(self.screen)
 
 
 

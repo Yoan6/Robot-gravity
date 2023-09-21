@@ -5,10 +5,11 @@ class Arms(object):
         self.img = pygame.image.load('Images/SpriteRobot/Arms.png')
         self.x = x
         self.y = y
-        self.rect = pygame.Rect(x, y+28, 128, 128)
+        self.rect = pygame.Rect(x, y, 40, 31)
         
 
 
     def show(self,win): 
-        pygame.draw.rect(win, (255,0,0), self.rect, 2)
+        #Décommenter la ligne d'en dessous pour voir la hitbox
+        #pygame.draw.rect(win, (255,0,0), self.rect, 2)
         win.blit(self.img, (self.x,self.y))

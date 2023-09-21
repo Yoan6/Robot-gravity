@@ -2,6 +2,7 @@ import pygame
 from player import Player
 import pytmx
 
+
 class Level:
     def __init__(self, map_path, surface, name_lvl, player):
         self.spawn_x = 10
