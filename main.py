@@ -39,7 +39,7 @@ class Game:
         self.runningMusic = False
         self.gameover = GameOver(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
-        self.wincond = Arms(128, 100)
+        self.wincond = Arms(1660, 220)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -64,11 +64,11 @@ class Game:
 
         ]
 
-        self.objectPic = [
-            Spike(300,500),
-            Spike(800,400),
-            Spike(600,600)
-        ]
+        #self.objectPic = [
+        #    Spike(300,500),
+        #    Spike(800,400),
+        #    Spike(600,600)
+        #]
 
 
         self.horloge = pygame.time.Clock()
@@ -192,11 +192,11 @@ class Game:
                     # platform.show(self.screen)
                     self.wincond.show(self.screen)
 
-                for pic in self.objectPic:
-                    if self.player.rect.colliderect(pic):
-                        self.gameover.show()
-                        self.gameover.update()
-                        self.gameover.draw()
+                #for pic in self.objectPic:
+                #    if self.player.rect.colliderect(pic):
+                #        self.gameover.show()
+                #        self.gameover.update()
+                #        self.gameover.draw()
 
 
                     #pic.show(self.screen)
