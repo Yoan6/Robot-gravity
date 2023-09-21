@@ -29,7 +29,7 @@ class Game:
         self.playerSpeedX = 0
         self.right = False
         self.left = False
-        self.gravityI = False
+        self.gravityReversable = False
         self.gravityInv = False
         self.walkCount = 0
         self.taille = [32, 60]
@@ -64,12 +64,11 @@ class Game:
 
         ]
 
-        #self.objectPic = [
+        # self.objectPic = [
         #    Spike(300,500),
         #    Spike(800,400),
         #    Spike(600,600)
-        #]
-
+        # ]
 
         self.horloge = pygame.time.Clock()
         self.fps = 30
@@ -77,7 +76,7 @@ class Game:
     # Boucle principale
     def main(self):
         Starting_background = pygame.image.load("Images/EcranAttente.png")
-        self.screen.blit(Starting_background,(0,0))
+        self.screen.blit(Starting_background, (0, 0))
         # Création des instances de la classe Bouton
         playButton = Button("Jouer", 360, 320, 300, 50, (0, 128, 255))
         creditButton = Button("Crédits", 360, 420, 300, 50, (0, 128, 255))
@@ -100,7 +99,7 @@ class Game:
         creditRan = False
 
         while self.running:
-            
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -143,10 +142,10 @@ class Game:
 
                         # Inversion de la gravité si on peut (gravityI)
                         if event.key == pygame.K_SPACE:
-                            if self.gravityDirection == 1 and self.gravityI:
+                            if self.gravityDirection == 1 and self.gravityReversable:
                                 self.gravityDirection = -1
                                 self.gravityInv = True
-                            elif self.gravityI:
+                            elif self.gravityReversable:
                                 self.gravityDirection = 1
                                 self.gravityInv = False
 
@@ -162,7 +161,7 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level2.update()
-                self.gravityI = False
+                self.gravityReversable = False
 
                 self.resist = (0, 0)
 
@@ -172,14 +171,14 @@ class Game:
                             rectangle):
                         self.resist = (0, -10)
 
-                    if self.wincond.rect.colliderect(self.player.rect) :
-                        self.player.rect.x=10
-                        self.player.rect.y=200
+                    if self.wincond.rect.colliderect(self.player.rect):
+                        self.player.rect.x = 10
+                        self.player.rect.y = 200
 
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
                         dy = self.player.rect.centery - platform.rect.centery
-                        self.gravityI = True
+                        self.gravityReversable = True
 
                         if dy > 0:
                             self.player.rect.y = (platform.rect.y + platform.rect.h)
@@ -192,21 +191,18 @@ class Game:
                     # platform.show(self.screen)
                     self.wincond.show(self.screen)
 
-                #for pic in self.objectPic:
+                # for pic in self.objectPic:
                 #    if self.player.rect.colliderect(pic):
                 #        self.gameover.show()
                 #        self.gameover.update()
                 #        self.gameover.draw()
 
-
-                    #pic.show(self.screen)
-
-
+                # pic.show(self.screen)
 
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped:
                     if self.player.jumpCounter < 1:
-                        self.player.jump()
+                        self.player.jump(self.gravityDirection)
                 if not self.runningMusic:
                     print("musique")
                     pygame.mixer.init()
@@ -232,12 +228,10 @@ class Game:
                     self.gameover.draw()
 
                     # Si le joueur rencontre sort de la map, gameover
-               # elif not self.player.rect.colliderect(self.plateformListRect):
-                #    self.gameover.show()
-                 #   self.gameover.update()
-                  #  self.gameover.draw()
-
-
+            # elif not self.player.rect.colliderect(self.plateformListRect):
+            #    self.gameover.show()
+            #   self.gameover.update()
+            #  self.gameover.draw()
 
             # Affiche les crédits
             elif creditRan:
@@ -256,8 +250,6 @@ class Game:
             if main_buttons_visible:
                 playButton.draw(self.screen, white)
                 creditButton.draw(self.screen, white)
-
-            
 
         # Écran noir
         self.screen.fill(black)

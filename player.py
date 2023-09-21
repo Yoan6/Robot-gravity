@@ -44,9 +44,9 @@ class Player(pygame.sprite.Sprite):
                 surface.blit(self.char, (self.rect.x, self.rect.y))
 
     # Fonction sauter
-    def jump(self):
+    def jump(self, gravity):
         if self.jumped:
-            if self.jumpUp >= 6:
+            if self.jumpUp >= 12:
                 self.jumpDown -= 1
                 self.jumpStatus = self.jumpDown
 
@@ -59,4 +59,7 @@ class Player(pygame.sprite.Sprite):
                 self.jumpDown = 5
                 self.jumped = False
 
-            self.rect.y -= (10 * (self.jumpStatus / 2))
+            if gravity == 1:
+                self.rect.y -= (10 * (self.jumpStatus / 2))
+            else:
+                self.rect.y += (10 * (self.jumpStatus / 2))
