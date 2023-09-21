@@ -64,11 +64,17 @@ class Game:
 
         ]
 
-        #self.objectPic = [
-        #    Spike(300,500),
-        #    Spike(800,400),
-        #    Spike(600,600)
-        #]
+        self.objectPic = [
+            Spike(0,490,170,25),
+            Spike(800,400,100,128),
+            Spike(600,600,100,128),
+            Spike(300,500,100,128),
+            Spike(800,400,100,128),
+            Spike(600,600,100,128),
+            Spike(300,500,100,128),
+            Spike(800,400,100,128),
+            Spike(600,600,100,128)
+        ]
 
 
         self.horloge = pygame.time.Clock()
@@ -192,14 +198,14 @@ class Game:
                     # platform.show(self.screen)
                     self.wincond.show(self.screen)
 
-                #for pic in self.objectPic:
-                #    if self.player.rect.colliderect(pic):
-                #        self.gameover.show()
-                #        self.gameover.update()
-                #        self.gameover.draw()
+                for pic in self.objectPic:
+                    if self.player.rect.colliderect(pic):
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
 
 
-                    #pic.show(self.screen)
+                    pic.show(self.screen)
 
 
 
