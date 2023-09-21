@@ -2,15 +2,6 @@ import pygame
 
 
 # Classe pour représenter un bouton
-def playFunction():
-    print("Bouton Jouer cliqué")
-    # Ajouter ici le code pour la fonction "Jouer"
-
-
-def creditFunction():
-    print("Bouton Crédits cliqué")
-    # Ajouter ici le code pour la fonction "Crédits"
-
 
 class Button:
     def __init__(self, texte, x, y, largeur, hauteur, couleur):
@@ -24,10 +15,14 @@ class Button:
     def draw(self, surface, colorTxt):
         pygame.draw.rect(surface, self.couleur, (self.x, self.y, self.largeur, self.hauteur))
         font = pygame.font.Font(None, 36)
-        texte_surface = font.render(self.texte, True, colorTxt)
-        texte_rect = texte_surface.get_rect()
-        texte_rect.center = (self.x + self.largeur / 2, self.y + self.hauteur / 2)
-        surface.blit(texte_surface, texte_rect)
+        lines = self.texte.split('\n')  # Sépare le texte en lignes sur les sauts de ligne
+        y_offset = 0
+        for line in lines:
+            texte_surface = font.render(line, True, colorTxt)
+            texte_rect = texte_surface.get_rect()
+            texte_rect.center = (self.x + self.largeur / 2, self.y + self.hauteur / 2 + y_offset)
+            surface.blit(texte_surface, texte_rect)
+            y_offset += 25  # Espacement vertical entre les lignes
 
     def erase_button(self):
         self.x = 0
