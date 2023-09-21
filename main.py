@@ -40,6 +40,7 @@ class Game:
         self.gameover = GameOver(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
         self.wincond = Arms(1660, 220)
+        self.winning=0
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -188,8 +189,10 @@ class Game:
                         self.resist = (0, -10)
 
                     if self.wincond.rect.colliderect(self.player.rect):
-                        self.player.rect.x = 10
-                        self.player.rect.y = 200
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
+                        self.winning=self.winning+1
 
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
@@ -277,6 +280,10 @@ class Game:
                     
                     
                 if self.player.nb_life<0:
+                    pygame.time.wait(2000)
+                    pygame.quit()
+
+                if self.winning>50:
                     pygame.time.wait(2000)
                     pygame.quit()
 
