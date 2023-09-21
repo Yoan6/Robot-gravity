@@ -17,8 +17,8 @@ class Game:
 
     def __init__(self):
         # Configuration de la taille de la fenêtre
-        self.screen_width = 1024
-        self.screen_height = 768
+        self.screen_width = 1400
+        self.screen_height = 900
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
@@ -30,7 +30,7 @@ class Game:
         self.gravityI = False
         self.gravityInv = False
         self.walkCount = 0
-        self.taille = [32, 64]
+        self.taille = [32, 60]
         self.player = Player(self.player_x, self.player_y, self.taille)
         self.gravity = (0, 10)
         self.resist = (0, 0)
@@ -42,8 +42,10 @@ class Game:
         self.gravityDirection = 1
         self.plateformListRect = [
             pygame.Rect(300, 500, 100, 50),
-            pygame.Rect(800, 400, 200, 50),
-            pygame.Rect(600, 600, 200, 50)
+
+            pygame.Rect(0, 440, 100, 400),
+            pygame.Rect(13, 230, 150, 20),
+            pygame.Rect(150, 0, 160, 80)
         ]
 
         self.horloge = pygame.time.Clock()
@@ -87,7 +89,7 @@ class Game:
                         # On ne doit plus pouvoir cliquer sur les boutons
                         playButton.erase_button()
                         creditButton.erase_button()
-                        level3.run()
+                        level2.run()
                         level1Ran = True
 
                     # Clic sur le bouton Crédits
@@ -135,7 +137,7 @@ class Game:
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
-                level3.update()
+                level2.update()
                 self.gravityI = False
 
                 self.resist = (0, 0)
