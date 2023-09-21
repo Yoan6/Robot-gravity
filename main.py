@@ -218,7 +218,7 @@ class Game:
 
 
 
-                    pic.show(self.screen)
+                    # pic.show(self.screen)
 
 
 
@@ -243,7 +243,7 @@ class Game:
                 self.gravityGame()
                 self.player.move(self.playerSpeedX)
 
-                # Si le joueur rencontre sort de la map, gameover
+                # Si le joueur rencontre un pic ou sort de la map, il revient au spawn et perd une vie
                 if not self.player.rect.colliderect(self.rect):
                     
                     level2.spawn()
@@ -252,15 +252,12 @@ class Game:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
-                    
+                    print("Première condition")
+
                 if self.player.nb_life<0:
                     pygame.time.wait(2000)
-                    pygame.quit()      
-                    # Si le joueur rencontre sort de la map, gameover
-               # elif not self.player.rect.colliderect(self.plateformListRect):
-                #    self.gameover.show()
-                 #   self.gameover.update()
-                  #  self.gameover.draw()
+                    pygame.quit()
+                    print("Deuxième condition")
 
 
 
