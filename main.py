@@ -76,6 +76,12 @@ class Game:
             Spike(1587,762,170,25)
         ]
 
+        self.objectAdv = [
+            
+            #Advise(210,200,"Un jour fut née un Grand sage. \n Sa Phrase préférée? Fuck Yoan.",100,10)
+        ]
+
+
         self.horloge = pygame.time.Clock()
         self.fps = 30
 
@@ -198,7 +204,7 @@ class Game:
                             self.player.jumpCounter = 0
                             # Collision en bas de player.rect
 
-                    platform.show(self.screen)
+                    # platform.show(self.screen)
                     self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
@@ -218,7 +224,14 @@ class Game:
 
 
 
-                    pic.show(self.screen)
+                    # pic.show(self.screen)
+
+                ShowBubble=False
+                for adv in self.objectAdv:
+                    if self.player.rect.colliderect(adv):
+                        ShowBubble=True
+                    adv.show(self.screen,ShowBubble)
+                    ShowBubble=False
 
 
 
@@ -227,7 +240,6 @@ class Game:
                     if self.player.jumpCounter < 1:
                         self.player.jump(self.gravityDirection)
                 if not self.runningMusic:
-                    print("musique")
                     pygame.mixer.init()
                     pygame.mixer.music.load('Musique/musique.mp3')
                     pygame.mixer.music.set_volume(0.2)
@@ -244,24 +256,26 @@ class Game:
                 self.gravityGame()
                 self.player.move(self.playerSpeedX)
 
-                # Si le joueur rencontre sort de la map, gameover
+                # Si le joueur sort de la map, il revient au spawn et perd une vie
                 if not self.player.rect.colliderect(self.rect):
 
                     level2.spawn()
+                    # La gravité doit forcément être vers le bas :
+                    self.gravityDirection = 1
+                    self.gravityInv = False
+
+                    # Réduction de vie :
                     self.player.nb_life=self.player.nb_life-1
+
                 if self.player.nb_life<=0:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
-
+                    
                 if self.player.nb_life<0:
                     pygame.time.wait(2000)
                     pygame.quit()
-                    # Si le joueur rencontre sort de la map, gameover
-               # elif not self.player.rect.colliderect(self.plateformListRect):
-                #    self.gameover.show()
-                 #   self.gameover.update()
-                  #  self.gameover.draw()
+                    print("Deuxième condition")
 
 
 
