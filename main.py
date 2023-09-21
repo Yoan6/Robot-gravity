@@ -243,10 +243,15 @@ class Game:
                 self.gravityGame()
                 self.player.move(self.playerSpeedX)
 
-                # Si le joueur rencontre un pic ou sort de la map, il revient au spawn et perd une vie
+                # Si le joueur sort de la map, il revient au spawn et perd une vie
                 if not self.player.rect.colliderect(self.rect):
                     
                     level2.spawn()
+                    # La gravité doit forcément être vers le bas :
+                    self.gravityDirection = 1
+                    self.gravityInv = False
+
+                    # Réduction de vie :
                     self.player.nb_life=self.player.nb_life-1
                 if self.player.nb_life<=0:
                     self.gameover.show()
