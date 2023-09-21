@@ -60,11 +60,11 @@ class Game:
         black: tuple[int, int, int] = (0, 0, 0)
 
         # 1er niveau
-        level1 = Level('maps/Level1.png', self.screen, "Niveau 1")
+        level1 = Level('maps/Level1.png', self.screen, "Niveau 1", (1,1,1,1))
         # 2ème niveau
-        level2 = Level('maps/Level2.png', self.screen, "Niveau 2")
+        level2 = Level('maps/Level2.png', self.screen, "Niveau 2", (1,1,1,1))
         # 3ème niveau
-        level3 = Level('maps/Level3.png', self.screen, "Niveau 3")
+        level3 = Level('maps/Level3.png', self.screen, "Niveau 3", (1,1,1,1))
 
         # Variable pour indiquer si les boutons sont visibles ou non
         main_buttons_visible = True
@@ -191,7 +191,7 @@ class Game:
                 pygame.draw.rect(self.screen, (255, 0, 0), self.rect, 1)
 
             elif creditRan:
-                credits = Button("Développé par : \n - Yoan Delannoy \n - Aurèle Dunand \n\n Musique et effets sonores : \n - Esteban Elias Pueyo \n - Musique venant de ... \n\n Éléments graphiques, visuel \n - Esteban Elias Pueyo \n - Thommas Boussit - Principal graphiste", 0, 0, self.screen_width, self.screen_height, black)
+                credits = Button("Développé par : \n - Yoan Delannoy \n - Aurèle Dunand \n - Esteban Elias Pueyo \n - Thomas Boussit \n\n Musique et effets sonores : \n - Esteban Elias Pueyo \n - Musique venant de : https://pixabay.com/fr/users/antipodeanwriter-2366345/ \n\n Éléments graphiques, visuel \n - Esteban Elias Pueyo \n - Thommas Boussit - Principal graphiste", 0, 0, self.screen_width, self.screen_height, black)
                 credits.draw(self.screen, white)
             pygame.display.flip()
 
