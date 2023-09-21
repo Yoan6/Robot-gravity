@@ -51,7 +51,8 @@ class Game:
 
     # Boucle principale
     def main(self):
-
+        Starting_background = pygame.image.load("Images/EcranAttente.png")
+        self.screen.blit(Starting_background,(0,0))
         # Création des instances de la classe Bouton
         playButton = Button("Jouer", 360, 320, 300, 50, (0, 128, 255))
         creditButton = Button("Crédits", 360, 420, 300, 50, (0, 128, 255))
@@ -73,6 +74,7 @@ class Game:
         creditRan = False
 
         while self.running:
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -95,9 +97,6 @@ class Game:
                         playButton.erase_button()
                         creditButton.erase_button()
 
-                    # Clic sur la croix de fermeture de fenêtre
-                    elif self.screen_width - closeButtonWidth < x < self.screen_width and 0 < y < closeButtonHeight:
-                        self.running = False
 
                 # Deplacements
                 elif level1Ran:
@@ -176,7 +175,7 @@ class Game:
                     print("musique")
                     pygame.mixer.init()
                     pygame.mixer.music.load('Musique/musique.mp3')
-                    pygame.mixer.music.set_volume(0.3)
+                    pygame.mixer.music.set_volume(0.2)
                     pygame.mixer.music.play(-1)
                     self.runningMusic = True
                 # Dessine le player :
@@ -214,15 +213,7 @@ class Game:
                 playButton.draw(self.screen, white)
                 creditButton.draw(self.screen, white)
 
-            # Chargement de l'image de la croix de fermeture
-            close_button = pygame.image.load("Images/close_button.png")
-            # Redimensionnement de l'image de la croix de fermeture
-            closeButtonWidth = 30  # Spécifiez la nouvelle largeur souhaitée
-            closeButtonHeight = 30  # Spécifiez la nouvelle hauteur souhaitée
-            close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
-
-            # Affiche le bouton de fermeture redimensionné en haut à droite
-            self.screen.blit(close_button, (self.screen_width - closeButtonWidth, 0))
+            
 
         # Écran noir
         self.screen.fill(black)
