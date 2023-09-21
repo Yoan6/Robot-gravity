@@ -18,7 +18,7 @@ class Game:
 
     def __init__(self):
         # Configuration de la taille de la fenêtre
-        self.screen_width = 1400
+        self.screen_width = 1700
         self.screen_height = 900
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Page d'accueil")

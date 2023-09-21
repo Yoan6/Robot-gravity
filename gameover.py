@@ -5,7 +5,7 @@ class GameOver:
     def __init__(self, screen):
         self.screen = screen
         image = pygame.image.load("Images/gameover.jpg")  # Chargez l'image depuis le fichier
-        self.image = pygame.transform.scale(image, (1024, 768))
+        self.image = pygame.transform.scale(image, (1700, 900))
         self.image_rect = self.image.get_rect()
         self.show_window = False
         self.show_time = 0
