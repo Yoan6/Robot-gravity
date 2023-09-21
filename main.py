@@ -33,7 +33,7 @@ class Game:
         self.gravityInv = False
         self.walkCount = 0
         self.taille = [32, 60]
-        self.player = Player(self.player_x, self.player_y, self.taille)
+        self.player = Player(self.player_x, self.player_y, self.taille, 10)
         self.gravity = (0, 20)
         self.resist = (0, 0)
         self.runningMusic = False
@@ -64,11 +64,17 @@ class Game:
 
         ]
 
-        # self.objectPic = [
-        #    Spike(300,500),
-        #    Spike(800,400),
-        #    Spike(600,600)
-        # ]
+        self.objectPic = [
+            Spike(0,490,170,25),
+            Spike(1000,110,20,25),
+            Spike(454,670,115,25),
+            Spike(1000,370,20,25),
+            Spike(1080,370,20,25),
+            Spike(1170,545,40,25),
+            Spike(1265,142,20,25),
+            Spike(1415,142,20,25),
+            Spike(1587,762,170,25)
+        ]
 
         self.horloge = pygame.time.Clock()
         self.fps = 30
@@ -76,10 +82,11 @@ class Game:
     # Boucle principale
     def main(self):
         Starting_background = pygame.image.load("Images/EcranAttente.png")
-        self.screen.blit(Starting_background, (0, 0))
+        Starting_background =  pygame.transform.scale(Starting_background, (self.screen_width,self.screen_height))
+        self.screen.blit(Starting_background,(0,0))
         # Création des instances de la classe Bouton
-        playButton = Button("Jouer", 360, 320, 300, 50, (0, 128, 255))
-        creditButton = Button("Crédits", 360, 420, 300, 50, (0, 128, 255))
+        playButton = Button("Jouer", 700, 420, 300, 50, (0, 128, 255))
+        creditButton = Button("Crédits", 700, 520, 300, 50, (0, 128, 255))
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
@@ -113,6 +120,7 @@ class Game:
                         playButton.erase_button()
                         creditButton.erase_button()
                         level2.run()
+                        level2.draw_life()
                         level1Ran = True
 
                     # Clic sur le bouton Crédits
@@ -161,6 +169,7 @@ class Game:
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level2.update()
+                level2.draw_life()
                 self.gravityReversable = False
 
                 self.resist = (0, 0)
@@ -191,13 +200,22 @@ class Game:
                     # platform.show(self.screen)
                     self.wincond.show(self.screen)
 
-                # for pic in self.objectPic:
-                #    if self.player.rect.colliderect(pic):
-                #        self.gameover.show()
-                #        self.gameover.update()
-                #        self.gameover.draw()
+                for pic in self.objectPic:
+                    if self.player.rect.colliderect(pic):
+                        self.player.nb_life=self.player.nb_life-1
+                        level2.spawn()
+                        if self.player.nb_life==0:
+                            self.gameover.show()
+                            self.gameover.update()
+                            self.gameover.draw()
+                            pygame.time.wait(500)
+                            pygame.quit()
 
-                # pic.show(self.screen)
+
+
+                    pic.show(self.screen)
+
+
 
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped:
@@ -223,25 +241,30 @@ class Game:
 
                 # Si le joueur rencontre sort de la map, gameover
                 if not self.player.rect.colliderect(self.rect):
+
+                    level2.spawn()
+                    self.player.nb_life=self.player.nb_life-1
+                if self.player.nb_life<=0:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
 
+                if self.player.nb_life<0:
+                    pygame.time.wait(2000)
+                    pygame.quit()
                     # Si le joueur rencontre sort de la map, gameover
-            # elif not self.player.rect.colliderect(self.plateformListRect):
-            #    self.gameover.show()
-            #   self.gameover.update()
-            #  self.gameover.draw()
+               # elif not self.player.rect.colliderect(self.plateformListRect):
+                #    self.gameover.show()
+                 #   self.gameover.update()
+                  #  self.gameover.draw()
+
+
 
             # Affiche les crédits
             elif creditRan:
-                credits = Button(
-                    "Développé par : \n - Yoan Delannoy \n - Aurèle Dunand \n - Esteban Elias Pueyo \n - Thomas "
-                    "Boussit \n\n Musique et effets sonores : \n - Esteban Elias Pueyo \n - Musique venant de : "
-                    "https://pixabay.com/fr/users/antipodeanwriter-2366345/ \n\n Éléments graphiques, visuel \n - "
-                    "Esteban Elias Pueyo \n - Thommas Boussit - Principal graphiste",
-                    0, 0, self.screen_width, self.screen_height, black)
-                credits.draw(self.screen, white)
+                credits = pygame.image.load("Images/credits.png")
+                image_credits = pygame.transform.scale(credits, (self.screen_width, self.screen_height))
+                self.screen.blit(image_credits, (0,0))
             pygame.display.flip()
 
             # Limite des fps
