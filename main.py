@@ -66,14 +66,14 @@ class Game:
 
         self.objectPic = [
             Spike(0,490,170,25),
-            Spike(800,400,100,128),
-            Spike(600,600,100,128),
-            Spike(300,500,100,128),
-            Spike(800,400,100,128),
-            Spike(600,600,100,128),
-            Spike(300,500,100,128),
-            Spike(800,400,100,128),
-            Spike(600,600,100,128)
+            Spike(1000,110,20,25),
+            Spike(454,670,115,25),
+            Spike(1000,370,20,25),
+            Spike(1080,370,20,25),
+            Spike(1170,545,40,25),
+            Spike(1265,142,20,25),
+            Spike(1415,142,20,25),
+            Spike(1587,762,170,25)
         ]
 
 
@@ -168,7 +168,7 @@ class Game:
                             self.left = False
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
-            if level1Ran:
+            if level1Ran:              
                 level2.update()
                 level2.draw_life()
                 self.gravityI = False
@@ -203,9 +203,15 @@ class Game:
 
                 for pic in self.objectPic:
                     if self.player.rect.colliderect(pic):
-                        self.gameover.show()
-                        self.gameover.update()
-                        self.gameover.draw()
+                        self.player.nb_life=self.player.nb_life-1
+                        level2.spawn()
+                        if self.player.nb_life==0:
+                            self.gameover.show()
+                            self.gameover.update()
+                            self.gameover.draw()
+                            pygame.time.wait(500)
+                            pygame.quit()
+
 
 
                     pic.show(self.screen)
@@ -235,10 +241,17 @@ class Game:
 
                 # Si le joueur rencontre sort de la map, gameover
                 if not self.player.rect.colliderect(self.rect):
+                    
+                    level2.spawn()
+                    self.player.nb_life=self.player.nb_life-1
+                if self.player.nb_life<=0:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
-
+                    
+                if self.player.nb_life<0:
+                    pygame.time.wait(2000)
+                    pygame.quit()      
                     # Si le joueur rencontre sort de la map, gameover
                # elif not self.player.rect.colliderect(self.plateformListRect):
                 #    self.gameover.show()
