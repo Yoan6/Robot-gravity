@@ -3,6 +3,7 @@ import sys
 import pytmx
 from pygame.sprite import Group
 
+import obstacles
 from button import Button
 from player import *
 from player import Player
@@ -47,6 +48,13 @@ class Game:
             pygame.Rect(13, 230, 150, 20),
             pygame.Rect(150, 0, 160, 80)
         ]
+
+        self.objectPic = [
+            Spike(300,500),
+            Spike(800,400),
+            Spike(600,600)
+        ]
+
 
         self.horloge = pygame.time.Clock()
         self.fps = 30
@@ -163,6 +171,17 @@ class Game:
 
                     platform.show(self.screen)
 
+                for pic in self.objectPic:
+                    if self.player.rect.colliderect(pic):
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
+
+
+                    #pic.show(self.screen)
+
+
+
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped:
                     if self.player.jumpCounter < 1:
@@ -190,6 +209,14 @@ class Game:
                     self.gameover.show()
                     self.gameover.update()
                     self.gameover.draw()
+
+                    # Si le joueur rencontre sort de la map, gameover
+               # elif not self.player.rect.colliderect(self.plateformListRect):
+                #    self.gameover.show()
+                 #   self.gameover.update()
+                  #  self.gameover.draw()
+
+
 
             # Affiche les crédits
             elif creditRan:
