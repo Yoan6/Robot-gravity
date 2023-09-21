@@ -35,7 +35,6 @@ class Game:
         self.ground = Ground(0, 767, self.screen_width, self.screen_height)
         self.gravity = (0, 10)
         self.resist = (0, 0)
-        self.touchGround = False
         self.runningMusic = False
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
 
@@ -118,7 +117,7 @@ class Game:
                             self.player.jumpCounter += 1
 
                         # Inversion de la gravité si on peut (gravityI)
-                        if event.key == pygame.K_SPACE and self.touchGround:
+                        if event.key == pygame.K_SPACE:
                             if self.gravityDirection == 1 and self.gravityI:
                                 self.gravityDirection = -1
                             elif self.gravityI:
@@ -139,7 +138,6 @@ class Game:
                 self.gravityI = False
                 if self.ground.rect.colliderect(self.player.rect):
                     self.resist = (0, -10)
-                    self.touchGround = True
                     self.player.jumpCounter = 0
                     self.gravityI = True
                 else:
@@ -169,7 +167,7 @@ class Game:
                 # Dessine le sol
                 self.ground.show(self.screen)
                 # Le joueur ne peut faire qu'un saut
-                if self.player.jumped and self.touchGround:
+                if self.player.jumped:
                     if self.player.jumpCounter < 1:
                         self.player.jump()
                 if not self.runningMusic:
