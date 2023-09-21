@@ -62,10 +62,11 @@ class Game:
     # Boucle principale
     def main(self):
         Starting_background = pygame.image.load("Images/EcranAttente.png")
+        Starting_background =  pygame.transform.scale(Starting_background, (self.screen_width,self.screen_height))
         self.screen.blit(Starting_background,(0,0))
         # Création des instances de la classe Bouton
-        playButton = Button("Jouer", 360, 320, 300, 50, (0, 128, 255))
-        creditButton = Button("Crédits", 360, 420, 300, 50, (0, 128, 255))
+        playButton = Button("Jouer", 700, 420, 300, 50, (0, 128, 255))
+        creditButton = Button("Crédits", 700, 520, 300, 50, (0, 128, 255))
         # Définition des couleurs
         white: tuple[int, int, int] = (255, 255, 255)
         black: tuple[int, int, int] = (0, 0, 0)
@@ -221,13 +222,9 @@ class Game:
 
             # Affiche les crédits
             elif creditRan:
-                credits = Button(
-                    "Développé par : \n - Yoan Delannoy \n - Aurèle Dunand \n - Esteban Elias Pueyo \n - Thomas "
-                    "Boussit \n\n Musique et effets sonores : \n - Esteban Elias Pueyo \n - Musique venant de : "
-                    "https://pixabay.com/fr/users/antipodeanwriter-2366345/ \n\n Éléments graphiques, visuel \n - "
-                    "Esteban Elias Pueyo \n - Thommas Boussit - Principal graphiste",
-                    0, 0, self.screen_width, self.screen_height, black)
-                credits.draw(self.screen, white)
+                credits = pygame.image.load("Images/credits.png")
+                image_credits = pygame.transform.scale(credits, (self.screen_width, self.screen_height))
+                self.screen.blit(image_credits, (0,0))
             pygame.display.flip()
 
             # Limite des fps
