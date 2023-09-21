@@ -76,6 +76,11 @@ class Game:
             Spike(1587,762,170,25)
         ]
 
+        self.objectAdv = [
+            
+            #Advise(210,200,"Un jour fut née un Grand sage. \n Sa Phrase préférée? Fuck Yoan.",100,10)
+        ]
+
 
         self.horloge = pygame.time.Clock()
         self.fps = 30
@@ -220,6 +225,13 @@ class Game:
 
                     # pic.show(self.screen)
 
+                ShowBubble=False
+                for adv in self.objectAdv:
+                    if self.player.rect.colliderect(adv):
+                        ShowBubble=True
+                    adv.show(self.screen,ShowBubble)
+                    ShowBubble=False
+
 
 
                 # Le joueur ne peut faire qu'un saut
@@ -253,6 +265,7 @@ class Game:
 
                     # Réduction de vie :
                     self.player.nb_life=self.player.nb_life-1
+
                 if self.player.nb_life<=0:
                     self.gameover.show()
                     self.gameover.update()
