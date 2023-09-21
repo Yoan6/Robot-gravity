@@ -7,7 +7,6 @@ from button import Button
 from player import *
 from player import Player
 from level import Level
-from ground import Ground
 from obstacles import Spike
 from advise import Advise
 from plateform import Plateform
@@ -33,7 +32,6 @@ class Game:
         self.walkCount = 0
         self.taille = [32, 64]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground(0, 767, self.screen_width, self.screen_height)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.runningMusic = False
