@@ -204,6 +204,10 @@ class Game:
                     if self.player.rect.colliderect(pic):
                         self.player.nb_life=self.player.nb_life-1
                         level2.spawn()
+                        # La gravité doit forcément être vers le bas :
+                        self.gravityDirection = 1
+                        self.gravityInv = False
+
                         if self.player.nb_life==0:
                             self.gameover.show()
                             self.gameover.update()
