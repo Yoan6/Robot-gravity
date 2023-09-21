@@ -11,8 +11,8 @@ class Level:
         self.display_surface = surface
         map = pygame.image.load(map_path)
         self.zoom = 1
-        self.screenWidth = 1024
-        self.screenHeight = 768
+        self.screenWidth = 1400
+        self.screenHeight = 900
         self.window = None
         largeur_zoom = int(self.screenWidth * self.zoom)
         hauteur_zoom = int(self.screenHeight * self.zoom)

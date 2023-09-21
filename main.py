@@ -3,11 +3,11 @@ import sys
 import pytmx
 from pygame.sprite import Group
 
+import obstacles
 from button import Button
 from player import *
 from player import Player
 from level import Level
-from ground import Ground
 from obstacles import Spike
 from advise import Advise
 from plateform import Plateform
@@ -18,8 +18,8 @@ class Game:
 
     def __init__(self):
         # Configuration de la taille de la fenêtre
-        self.screen_width = 1024
-        self.screen_height = 768
+        self.screen_width = 1400
+        self.screen_height = 900
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Page d'accueil")
         self.running = True
@@ -31,9 +31,8 @@ class Game:
         self.gravityI = False
         self.gravityInv = False
         self.walkCount = 0
-        self.taille = [32, 64]
+        self.taille = [32, 60]
         self.player = Player(self.player_x, self.player_y, self.taille)
-        self.ground = Ground(0, 767, self.screen_width, self.screen_height)
         self.gravity = (0, 10)
         self.resist = (0, 0)
         self.runningMusic = False
@@ -44,16 +43,26 @@ class Game:
         self.gravityDirection = 1
         self.plateformListRect = [
             pygame.Rect(300, 500, 100, 50),
-            pygame.Rect(800, 400, 200, 50),
-            pygame.Rect(800, 600, 200, 50)
+
+            pygame.Rect(0, 440, 100, 400),
+            pygame.Rect(13, 230, 150, 20),
+            pygame.Rect(150, 0, 160, 80)
         ]
+
+        self.objectPic = [
+            Spike(300,500),
+            Spike(800,400),
+            Spike(600,600)
+        ]
+
 
         self.horloge = pygame.time.Clock()
         self.fps = 30
 
     # Boucle principale
     def main(self):
-
+        Starting_background = pygame.image.load("Images/EcranAttente.png")
+        self.screen.blit(Starting_background,(0,0))
         # Création des instances de la classe Bouton
         playButton = Button("Jouer", 360, 320, 300, 50, (0, 128, 255))
         creditButton = Button("Crédits", 360, 420, 300, 50, (0, 128, 255))
@@ -76,6 +85,7 @@ class Game:
         creditRan = False
 
         while self.running:
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
@@ -98,9 +108,6 @@ class Game:
                         playButton.erase_button()
                         creditButton.erase_button()
 
-                    # Clic sur la croix de fermeture de fenêtre
-                    elif self.screen_width - closeButtonWidth < x < self.screen_width and 0 < y < closeButtonHeight:
-                        self.running = False
 
                 # Deplacements
                 elif level1Ran:
@@ -141,12 +148,8 @@ class Game:
             if level1Ran:
                 level2.update()
                 self.gravityI = False
-                if self.ground.rect.colliderect(self.player.rect):
-                    self.resist = (0, -10)
-                    self.player.jumpCounter = 0
-                    self.gravityI = True
-                else:
-                    self.resist = (0, 0)
+
+                self.resist = (0, 0)
 
                 for rectangle in self.plateformListRect:
                     platform = Plateform(rectangle)
@@ -169,8 +172,17 @@ class Game:
 
                     platform.show(self.screen)
 
-                # Dessine le sol
-                self.ground.show(self.screen)
+                for pic in self.objectPic:
+                    if self.player.rect.colliderect(pic):
+                        self.gameover.show()
+                        self.gameover.update()
+                        self.gameover.draw()
+
+
+                    #pic.show(self.screen)
+
+
+
                 # Le joueur ne peut faire qu'un saut
                 if self.player.jumped:
                     if self.player.jumpCounter < 1:
@@ -179,7 +191,7 @@ class Game:
                     print("musique")
                     pygame.mixer.init()
                     pygame.mixer.music.load('Musique/musique.mp3')
-                    pygame.mixer.music.set_volume(0.3)
+                    pygame.mixer.music.set_volume(0.2)
                     pygame.mixer.music.play(-1)
                     self.runningMusic = True
                 # Dessine le player :
@@ -199,6 +211,14 @@ class Game:
                     self.gameover.update()
                     self.gameover.draw()
 
+                    # Si le joueur rencontre sort de la map, gameover
+               # elif not self.player.rect.colliderect(self.plateformListRect):
+                #    self.gameover.show()
+                 #   self.gameover.update()
+                  #  self.gameover.draw()
+
+
+
             # Affiche les crédits
             elif creditRan:
                 credits = Button(
@@ -217,15 +237,7 @@ class Game:
                 playButton.draw(self.screen, white)
                 creditButton.draw(self.screen, white)
 
-            # Chargement de l'image de la croix de fermeture
-            close_button = pygame.image.load("Images/close_button.png")
-            # Redimensionnement de l'image de la croix de fermeture
-            closeButtonWidth = 30  # Spécifiez la nouvelle largeur souhaitée
-            closeButtonHeight = 30  # Spécifiez la nouvelle hauteur souhaitée
-            close_button = pygame.transform.scale(close_button, (closeButtonWidth, closeButtonHeight))
-
-            # Affiche le bouton de fermeture redimensionné en haut à droite
-            self.screen.blit(close_button, (self.screen_width - closeButtonWidth, 0))
+            
 
         # Écran noir
         self.screen.fill(black)
