@@ -3,19 +3,21 @@ from player import Player
 import pytmx
 
 class Level:
-    def __init__(self, map_path, surface, name_lvl):
+    def __init__(self, map_path, surface, name_lvl, spawn):
+        self.spawn = spawn
         self.name_lvl = name_lvl
         self.display_surface = surface
         map = pygame.image.load(map_path)
         self.zoom = 1.2
-        screenWidth = 1024  # Spécifiez la largeur souhaitée
-        screenHeight = 768  # Spécifiez la hauteur souhaitée
-        self.window = pygame.display.set_mode((screenWidth, screenHeight))
-        largeur_zoom = int(screenWidth * self.zoom)
-        hauteur_zoom = int(screenHeight * self.zoom)
+        self.screenWidth = 1024
+        self.screenHeight = 768
+        self.window = None
+        largeur_zoom = int(self.screenWidth * self.zoom)
+        hauteur_zoom = int(self.screenHeight * self.zoom)
         self.fond_ecran_zoom = pygame.transform.scale(map, (largeur_zoom, hauteur_zoom))
 
     def run(self):
+        self.window = pygame.display.set_mode((self.screenWidth, self.screenHeight))
         self.window.blit(self.fond_ecran_zoom, (0, 0))
         pygame.display.set_caption(self.name_lvl)
 
