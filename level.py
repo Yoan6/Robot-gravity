@@ -2,6 +2,7 @@ import pygame
 from player import Player
 import pytmx
 
+
 class Level:
     def __init__(self, map_path, surface, name_lvl, spawn):
         self.spawn = spawn
@@ -27,4 +28,4 @@ class Level:
     def death(self):
         death = pygame.image.load("Images/gameover.jpg")
         death = pygame.transform.scale(death, (1024, 768))
-        self.window.blit(death, (0,0))
+        self.window.blit(death, (0, 0))
