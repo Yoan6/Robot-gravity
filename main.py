@@ -12,6 +12,7 @@ from obstacles import Spike
 from advise import Advise
 from plateform import Plateform
 from gameover import *
+from PartRecup import Arms
 
 
 class Game:
@@ -38,6 +39,7 @@ class Game:
         self.runningMusic = False
         self.gameover = GameOver(self.screen)
         self.rect = pygame.Rect(0, 0, self.screen_width, self.screen_height)
+        self.wincond = Arms(128, 100)
 
         # 1 = vers le bas, autre = vers le haut
         self.gravityDirection = 1
@@ -170,6 +172,10 @@ class Game:
                             rectangle):
                         self.resist = (0, -10)
 
+                    if self.wincond.rect.colliderect(self.player.rect) :
+                        self.player.rect.x=10
+                        self.player.rect.y=200
+
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
                         dy = self.player.rect.centery - platform.rect.centery
@@ -184,6 +190,7 @@ class Game:
                             # Collision en bas de player.rect
 
                     # platform.show(self.screen)
+                    self.wincond.show(self.screen)
 
                 for pic in self.objectPic:
                     if self.player.rect.colliderect(pic):
