@@ -23,10 +23,10 @@ class Game:
         self.player_x = 380
         self.player_y = 400
         self.playerSpeedX = 0
-        self.right=False
-        self.left=False
-        self.gravityI=False
-        self.walkCount=0
+        self.right = False
+        self.left = False
+        self.gravityI = False
+        self.walkCount = 0
         self.taille = [128, 128]
         self.player = Player(self.player_x, self.player_y, self.taille)
         self.ground = Ground(0, 767, 1024, 768)
@@ -40,7 +40,8 @@ class Game:
         self.gravityDirection = 1
         self.plateformListRect = [
             pygame.Rect(300, 500, 100, 50),
-            pygame.Rect(800, 400, 200, 50)
+            pygame.Rect(800, 400, 200, 50),
+            pygame.Rect(800, 600, 200, 50)
         ]
 
         self.horloge = pygame.time.Clock()
@@ -63,7 +64,7 @@ class Game:
         # 3ème niveau
         level3 = Level('maps/Level3.png', self.screen, "Niveau 3")
         # 4ème niveau
-        #level4 = Level('maps/Level4.png', self.screen, "Niveau 4")
+        # level4 = Level('maps/Level4.png', self.screen, "Niveau 4")
 
         # Définition de la position horizontale de la caméra :
         camera_x = 0
@@ -106,45 +107,43 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 18
-                            self.right=True
-                            self.left=False
+                            self.right = True
+                            self.left = False
 
                         elif event.key == pygame.K_LEFT:
                             self.playerSpeedX = -18
-                            self.left=True
-                            self.right=False
-                        else:
-                            self.left=False
-                            self.right=False
+                            self.left = True
+                            self.right = False
+
                         if event.key == pygame.K_UP:
                             self.player.jumped = True
                             self.player.jumpCounter += 1
-                            self.left=False
-                            self.right=False
 
+                        # Inversion de la gravité si on peut (gravityI)
                         if event.key == pygame.K_SPACE and self.touchGround:
-                            if self.gravityDirection == 1:
+                            if self.gravityDirection == 1 and self.gravityI:
                                 self.gravityDirection = -1
-                                self.gravityI=True
-                            else:
+                            elif self.gravityI:
                                 self.gravityDirection = 1
-                                self.gravityI=False
 
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_RIGHT:
                             self.playerSpeedX = 0
+                            self.right = False
 
                         if event.key == pygame.K_LEFT:
                             self.playerSpeedX = 0
+                            self.left = False
 
             # Si le niveau est lancé, on fait apparaitre son sol et on gère le déroulement du niveau
             if level1Ran:
                 level1.update()
-
+                self.gravityI = False
                 if self.ground.rect.colliderect(self.player.rect):
                     self.resist = (0, -10)
                     self.touchGround = True
                     self.player.jumpCounter = 0
+                    self.gravityI = True
                 else:
                     self.resist = (0, 0)
 
@@ -153,17 +152,18 @@ class Game:
                     if self.player.rect.midbottom[1] // 10 * 10 == platform.rect.top and self.player.rect.colliderect(
                             rectangle):
                         self.resist = (0, -10)
-                        self.player.jumpCounter = 0
 
                     if self.player.rect.colliderect(platform.rect):
                         dx = self.player.rect.centerx - platform.rect.centerx
                         dy = self.player.rect.centery - platform.rect.centery
+                        self.gravityI = True
 
                         if dy > 0:
                             self.player.rect.y = (platform.rect.y + platform.rect.h)
                             # Collision en haut de player.rect
                         else:
                             self.player.rect.y = (platform.rect.y - self.player.rect.h)
+                            self.player.jumpCounter = 0
                             # Collision en bas de player.rect
 
                     platform.show(self.screen)
@@ -182,11 +182,11 @@ class Game:
                     pygame.mixer.music.play(-1)
                     self.runningMusic = True
                 # Dessine le player :
-                if self.walkCount<15:
-                    self.walkCount=self.walkCount+1
+                if self.walkCount < 15:
+                    self.walkCount = self.walkCount + 1
                 else:
-                    self.walkCount=0
-                self.player.show(self.screen,self.right,self.left,self.walkCount,self.player_x,self.player_y)
+                    self.walkCount = 0
+                self.player.show(self.screen, self.right, self.left, self.walkCount, self.player_x, self.player_y)
 
                 # Active la gravité
                 self.gravityGame()
@@ -196,7 +196,6 @@ class Game:
 
             elif creditRan:
                 print("Entré dans les crédits")
-
 
             pygame.display.flip()
 
