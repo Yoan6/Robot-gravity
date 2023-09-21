@@ -1,10 +1,11 @@
 import pygame
 
-
 class GameOver:
     def __init__(self, screen):
         self.screen = screen
-        self.font = pygame.font.Font(None, 48)
+        image = pygame.image.load("Images/gameover.jpg")
+        self.image = pygame.transform.scale(image, (1024, 768))
+        self.image_rect = self.image.get_rect()
         self.show_window = False
         self.timer = 0
 
@@ -20,6 +21,5 @@ class GameOver:
 
     def draw(self):
         if self.show_window:
-            game_over_text = self.font.render("Game Over", True, (255, 0, 0))
-            text_rect = game_over_text.get_rect(center=self.screen.get_rect().center)
-            self.screen.blit(game_over_text, text_rect)
+            # Affichez l'image à la position souhaitée (par exemple, au centre de l'écran)
+            self.screen.blit(self.image, self.image_rect)

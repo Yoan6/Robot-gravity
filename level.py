@@ -8,7 +8,7 @@ class Level:
         self.name_lvl = name_lvl
         self.display_surface = surface
         map = pygame.image.load(map_path)
-        self.zoom = 1.2
+        self.zoom = 1
         self.screenWidth = 1024
         self.screenHeight = 768
         self.window = None
